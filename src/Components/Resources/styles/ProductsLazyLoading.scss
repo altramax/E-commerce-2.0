@@ -1,0 +1,135 @@
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1280px;
+
+$background: linear-gradient(
+  135deg,
+  rgba(211, 223, 232, 0.5) 30%,
+  rgba(169, 184, 197, 0.5) 38%,
+  rgba(168, 182, 193, 0.6) 41%,
+  rgba(168, 182, 193, 0.6) 50%,
+  rgba(168, 182, 193, 0.6) 50%,
+  rgba(169, 184, 197, 0.6) 51%,
+  rgba(211, 223, 232, 0.6) 57%,
+  rgba(211, 223, 232, 0.6) 80%,
+  rgba(211, 223, 232, 0.6) 80%
+);
+.LazyColor {
+  background: $background;
+  background-size: 1200% 1200%;
+  -webkit-animation: AnimationName 2s ease infinite reverse;
+  -moz-animation: AnimationName 2s ease infinite reverse;
+  animation: AnimationName 2s ease infinite reverse;
+}
+
+#lazy {
+  width: fit-content;
+  height: fit-content;
+}
+
+.reloadImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+  height: 16rem;
+  margin-top: -2rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.lazyName {
+  width: 18rem;
+  height: 4rem;
+  margin-top: 2rem;
+  margin: auto;
+  border-radius: 1rem;
+}
+
+.lazyPrice {
+  width: 8rem;
+  height: 2rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  margin: auto;
+}
+.lazyCountGroup {
+  width: 18rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  border-radius: 1rem;
+  margin: auto;
+}
+.lazyCart {
+  height: 2rem;
+  width: 8rem;
+  border-radius: 1rem;
+}
+.lazyCount {
+  height: 2rem;
+  width: 5rem;
+  border-radius: 1rem;
+}
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 0% 92%;
+  }
+  50% {
+    background-position: 100% 9%;
+  }
+  100% {
+    background-position: 0% 92%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 0% 92%;
+  }
+  50% {
+    background-position: 100% 9%;
+  }
+  100% {
+    background-position: 0% 92%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 92%;
+  }
+  100% {
+    background-position: 100% 9%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reload {
+    animation: App-logo-spin infinite 4s linear;
+  }
+}
+@keyframes App-logo-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .reload {
+    width: 16rem;
+    height: 27rem;
+  }
+  .reloadImage {
+    width: 16rem;
+    height: 16rem;
+  }
+  .lazyName {
+    width: 14rem;
+  }
+
+  .lazyCountGroup {
+    width: 14rem;
+  }
+}
