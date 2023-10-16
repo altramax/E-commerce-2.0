@@ -1,4 +1,4 @@
-import { configureStore, MiddlewareArray } from "@reduxjs/toolkit";
+import { configureStore} from "@reduxjs/toolkit";
 import { UserAuthSlice } from "./AuthSlice";
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -15,11 +15,10 @@ const persistedReducer = persistReducer(persistConfig, UserAuthSlice.reducer)
 
 export const store = configureStore ({
     reducer:{
-     user: UserAuthSlice.reducer
+     user: persistedReducer
     },
-    // devTools: process.env.NODE_ENV !== 'production',
-    // middleware: [thunk, logger]
-    // middleware: new MiddlewareArray().concat(persistReducer, logger)
+    devTools: process.env.NODE_ENV !== 'production',
+    middleware: [thunk]
 })
 
 export const persistor = persistStore(store)

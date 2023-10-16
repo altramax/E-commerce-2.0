@@ -3,6 +3,7 @@ import google_Icon from "../../../assets/google.svg";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
 import { creatUser, userDetails } from "../../../Redux/AuthSlice";
 import { useState } from "react";
+import axios from "axios";
 
 type signinType = {
   signup: any;
@@ -28,6 +29,22 @@ const SignInTemplate = ({ signup, opacity }: signinType): JSX.Element => {
     await setFields(fieldsValue);
   };
   console.log(fields);
+ console.log(user);
+
+
+
+
+
+ const test = async ()=>{
+  let b = await axios.get("https://localhost:9000/users")
+  console.log(b);
+}
+
+test();
+
+
+
+
 
   return (
     <SignInTemplateStyle>

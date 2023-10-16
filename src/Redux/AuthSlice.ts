@@ -8,6 +8,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, googleprovider, db } from "../Config/Config";
+import { useAppDispatch } from "./Hooks";
 
 // Define a type for the slice state
 interface valueState {
@@ -18,6 +19,12 @@ interface valueState {
 const initialState: valueState = {
   value: "",
 };
+
+type propsType = {
+email: string,
+password: string
+}
+
 
 export const userDetails = createAsyncThunk(
   "newUser",
