@@ -6,6 +6,7 @@ import NewPrice from "../Prices/NewPrice";
 import ProductQantity from "./ProductQuantity";
 import empty from "../assets/empty.jpg";
 import Checkout from "../Checkout/Checkout";
+import WelcomePage from "../../pages/login/WelcomePage";
 
 type getStructure = {
   id: number;
@@ -98,7 +99,8 @@ export default function CartManager() {
           </h3>
         </div>
       )}
-      {display && <Checkout func={clearHandler} arr={array}/>}
+      {display && <WelcomePage/>}
+      {/* {display && <Checkout func={clearHandler} arr={array}/>} */}
     </div>
   );
 }
