@@ -1,76 +1,42 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "./ConfigStore";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-import { auth, googleprovider, db } from "../Config/Config";
-import { useAppDispatch } from "./Hooks";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth} from "../Config/Config";
 
 // Define a type for the slice state
 interface valueState {
-  value: string;
+  value: any;
+  message: string;
 }
 
 // Define the initial state using that type
 const initialState: valueState = {
   value: "",
+  message: "",
 };
 
 type propsType = {
-email: string,
-password: string
-}
-
+  email: string;
+  password: string;
+};
 
 export const userDetails = createAsyncThunk(
-  "newUser",
-  async (arg: { email: string, password: string }) => {
+  "newUser/signin",
+  async (arg: propsType) => {
     const { email, password } = arg;
     let user = await createUserWithEmailAndPassword(auth, email, password);
     console.log(user);
-    return user;
-  }
-);
-
-
+    return user;});
 
 export const UserAuthSlice = createSlice({
   name: "UserAuth",
-
   initialState,
-
   reducers: {
-    creatUser: (
-      state,
-      action: PayloadAction<{ email: string; password: string }>
-    ) => {},
-    signIn: (state) => {
-      async () => {
-        try {
-        } catch (error) {}
-      };
-    },
-    signinWithGoogle: (state) => {},
-
-    logOut: (state) => {
-      async () => {
-        try {
-        } catch (error) {}
-      };
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(userDetails.fulfilled, (state, action) => {
-    //   state.value = action.payload;
+      state.value = action.payload;
+      state.message = "Request Successful";
     });
   },
 });
-
-export const { creatUser, signIn, signinWithGoogle, logOut } =
-  UserAuthSlice.actions;
-
 export default UserAuthSlice.reducer;

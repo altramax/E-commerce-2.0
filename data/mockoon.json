@@ -3,7 +3,7 @@
   "lastMigration": 28,
   "name": "Mockoon",
   "endpointPrefix": "",
-  "latency": 0,
+  "latency": 2000,
   "port": 9000,
   "hostname": "",
   "folders": [],
@@ -13,7 +13,7 @@
       "type": "http",
       "documentation": "BaSE ROUTE",
       "method": "get",
-      "endpoint": "users",
+      "endpoint": "",
       "responses": [
         {
           "uuid": "858c1e7a-776d-47d8-a09b-aa140ee374ce",

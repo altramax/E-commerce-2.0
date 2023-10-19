@@ -16,7 +16,7 @@ type fieldsType = {
 }
 
 const SignInTemplate = ({ signup, opacity }: signinType): JSX.Element => {
-  const user = useAppSelector((state) => state.user.value);
+  const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const [fields, setFields] = useState<fieldsType>({
     email: "",
@@ -28,33 +28,26 @@ const SignInTemplate = ({ signup, opacity }: signinType): JSX.Element => {
     fieldsValue[name] = value;
     await setFields(fieldsValue);
   };
-  console.log(fields);
- console.log(user);
-
-
-
-
-
- const test = async ()=>{
-  let b = await axios.get("https://localhost:9000/users")
-  console.log(b);
-}
-
-test();
-
-
-
-
 
   return (
     <SignInTemplateStyle>
       <form className={`signin ${opacity === "signup" ? "blurout" : "blurin"}`}>
-        <h2>MUSE.</h2>
+        {/* <p>Signin here</p> */}
+      <button
+            className="button"
+            onClick={(evt) => {
+              evt.preventDefault()
+              dispatch(userDetails(fields));
+            }}
+          >
+            Signin
+          </button>
         <div className="signin__body">
           <div className="signin__body__welcome">
             <h1>Welcome</h1>
-            {/* <p>Signin here</p> */}
           </div>
+
+          <div>{user.message}</div>
 
           <div className="signin__inputs">
             <input
@@ -78,15 +71,7 @@ test();
             />
           </div>
 
-          <button
-            className="button"
-            onClick={(evt) => {
-              evt.preventDefault()
-              dispatch(userDetails(fields));
-            }}
-          >
-            Signin
-          </button>
+         
 
           <div className="signin__dash">
             <div>——————</div>

@@ -99,7 +99,7 @@ export default function CartManager() {
           </h3>
         </div>
       )}
-      {display && <WelcomePage/>}
+      <WelcomePage/>
       {/* {display && <Checkout func={clearHandler} arr={array}/>} */}
     </div>
   );
