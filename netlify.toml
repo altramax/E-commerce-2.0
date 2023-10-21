@@ -1,7 +1,7 @@
 const mockoon = require('@mockoon/serverless');
 
 // Load the Mockoon Environment object
-const mockEnv = require('./datafile.json');
+const mockEnv = require('./data/mockoon.json');
 
 const mockoonServerless = new mockoon.MockoonServerless(mockEnv);
 

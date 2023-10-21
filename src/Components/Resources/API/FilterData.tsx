@@ -22,7 +22,7 @@ type dataStructure = {
   modal: JSX.Element;
 };
 
-export default function FilterData(props: propsType) {
+const FilterData = (props: propsType): JSX.Element=> {
   const [data, setData] = useState<dataStructure[] | null>();
   const [display, setDisplay] = useState<JSX.Element | null>();
 
@@ -102,3 +102,5 @@ export default function FilterData(props: propsType) {
     </div>
   );
 }
+
+export default FilterData;
