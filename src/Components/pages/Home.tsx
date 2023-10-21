@@ -1,26 +1,32 @@
-import Navbar from "../Templates/Navbar";
-import Footer from "../Templates/Footer";
-import HomeHeader from "../Templates/HomeManager";
+// import Navbar from "../Templates/Navbar";
+import Footer from "../Organism/Footer/Footer";
+import HomeHeader from "../Organism/HomePage/HomeManager";
 import axios from "axios";
+import WelcomePage from "./login/WelcomePage";
+import { useAppSelector } from "../../Redux/Hooks";
 
-export default function Home() {
+const Home = () => {
+  // const user = useAppSelector((state) => state.user);
+
   const test = async () => {
-  await fetch("https://localhost:900/posts",{
-        headers:{
-           " content-Type" : "application/json"
-        }
-    })
-      .then((res) => res.json())
-      .then((res) => console.log(res));
-   
+    let b = await axios.get("http://localhost:900/posts", {
+      responseType: "json",
+    });
+    // console.log(b);
   };
 
   test();
+
+  // console.log(user.value.user.uid);
+
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
+      <WelcomePage />
       <HomeHeader />
       <Footer />
     </div>
   );
-}
+};
+
+export default Home;

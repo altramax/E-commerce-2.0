@@ -21,10 +21,10 @@ type propsType = {
 
 export const userDetails = createAsyncThunk(
   "newUser/signin",
-  async (arg: propsType) => {
+  async (arg: {email: string, password: string}) => {
     const { email, password } = arg;
     let user = await createUserWithEmailAndPassword(auth, email, password);
-    console.log(user);
+
     return user;});
 
 export const UserAuthSlice = createSlice({
@@ -34,7 +34,7 @@ export const UserAuthSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(userDetails.fulfilled, (state, action) => {
-      state.value = action.payload;
+      state.value = action.payload.user.uid;
       state.message = "Request Successful";
     });
   },

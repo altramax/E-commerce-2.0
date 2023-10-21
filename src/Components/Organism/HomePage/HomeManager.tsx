@@ -1,29 +1,22 @@
-import { Fragment } from "react";
-import { Link, useResolvedPath } from "react-router-dom";
-import "./styles/HomeManager.scss";
-import adidas from "./assets/adidas.jpg";
-import chanel from "./assets/chanel.svg";
-import shipping from "./assets/shipping.png";
-import update from "./assets/update.png";
-import mask from "./assets/mask.png";
-import refund from "./assets/refund.png";
-import samsung from "./assets/samsung.png";
-import cartier from "./assets/cartier.svg";
+import HomeManagerStyle from "./HomeMangerStyle";
+import { Link } from "react-router-dom";
+import adidas from "../../assets/Icons/adidas.jpg";
+import chanel from "../../assets/Icons/chanel.svg";
+import shipping from "../../assets/Icons/shipping.png";
+import update from "../../assets/Icons/update.png";
+import mask from "../../assets/Icons/mask.png";
+import refund from "../../assets/Icons/refund.png";
+import samsung from "../../assets/Icons/samsung.png";
+import cartier from "../../assets/Icons/cartier.svg";
 import { BsArrowRight } from "react-icons/bs";
-import men from "./assets/men.jpg";
-import women from "./assets/women.jpg";
-import market from "./assets/market.jpg";
-import sale from "./assets/sale.jpg";
+import men from "../../assets/Images/men.jpg";
+import women from "../../assets/Images/women.jpg";
+import market from "../../assets/Images/market.jpg";
+import sale from "../../assets/Icons/sale.jpg";
 
-type Customtype = {
-  children: {} | any;
-  className: string;
-  path: string;
-};
-
-export default function HomeHeader() {
+const HomeManager = (): JSX.Element => {
   return (
-    <Fragment>
+    <HomeManagerStyle>
       <header className="headerContainer">
         <h2 className="headerText">Everyone's Collections And Style</h2>
       </header>
@@ -72,24 +65,24 @@ export default function HomeHeader() {
         <div className="shops">
           <div className="shopType">
             <img src={men} alt="" className="shopImg" />
-            <CustomLink path="/MenWear" className="shopButton">
+            <Link to="/MenWear" className="shopButton">
               <span>Shop for Men</span>
               <BsArrowRight />
-            </CustomLink>
+            </Link>
           </div>
           <div className="shopType">
             <img src={women} alt="" className="shopImg" />
-            <CustomLink path="/WomenWear" className="shopButton">
+            <Link to="/WomenWear" className="shopButton">
               <span>Shop for Women</span>
               <BsArrowRight />
-            </CustomLink>
+            </Link>
           </div>
           <div className="shopType">
             <img src={market} alt="" className="shopImg" />
-            <CustomLink path="/MarketPlace" className="shopButton">
+            <Link to="/MarketPlace" className="shopButton">
               <span>Super Store</span>
               <BsArrowRight />
-            </CustomLink>
+            </Link>
           </div>
         </div>
       </section>
@@ -105,15 +98,8 @@ export default function HomeHeader() {
           <img src={sale} alt="" className="" />
         </div>
       </section>
-    </Fragment>
+    </HomeManagerStyle>
   );
-}
+};
 
-function CustomLink(props: Customtype) {
-  const resolvedpath = useResolvedPath(props.path);
-  return (
-    <Link to={props.path} {...props}>
-      {props.children}
-    </Link>
-  );
-}
+export default HomeManager;

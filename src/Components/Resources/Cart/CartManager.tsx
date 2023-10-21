@@ -4,9 +4,8 @@ import "../styles/CartManager.scss";
 import Discount from "../Prices/Discount";
 import NewPrice from "../Prices/NewPrice";
 import ProductQantity from "./ProductQuantity";
-import empty from "../assets/empty.jpg";
-import Checkout from "../Checkout/Checkout";
-import WelcomePage from "../../pages/login/WelcomePage";
+import empty from "../../assets/Icons/empty.jpg";
+// import Checkout from "../Checkout/Checkout";
 
 type getStructure = {
   id: number;
@@ -99,7 +98,6 @@ export default function CartManager() {
           </h3>
         </div>
       )}
-      <WelcomePage/>
       {/* {display && <Checkout func={clearHandler} arr={array}/>} */}
     </div>
   );

@@ -1,9 +1,9 @@
 import SignInTemplateStyle from "./SignInTemplateStyle";
-import google_Icon from "../../../assets/google.svg";
+import google_Icon from "../../assets/Icons/google.svg";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
-import { creatUser, userDetails } from "../../../Redux/AuthSlice";
+import { userDetails } from "../../../Redux/AuthSlice";
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 type signinType = {
   signup: any;
@@ -28,23 +28,26 @@ const SignInTemplate = ({ signup, opacity }: signinType): JSX.Element => {
     fieldsValue[name] = value;
     await setFields(fieldsValue);
   };
+  // console.log(fields);
+ 
+
+if(user.value){
+  console.log(user)
+}
+
+
+
+
+
 
   return (
     <SignInTemplateStyle>
       <form className={`signin ${opacity === "signup" ? "blurout" : "blurin"}`}>
-        {/* <p>Signin here</p> */}
-      <button
-            className="button"
-            onClick={(evt) => {
-              evt.preventDefault()
-              dispatch(userDetails(fields));
-            }}
-          >
-            Signin
-          </button>
+        <h2>MUSE.</h2>
         <div className="signin__body">
           <div className="signin__body__welcome">
             <h1>Welcome</h1>
+            {/* <p>Signin here</p> */}
           </div>
 
           <div>{user.message}</div>
@@ -71,7 +74,15 @@ const SignInTemplate = ({ signup, opacity }: signinType): JSX.Element => {
             />
           </div>
 
-         
+          <button
+            className="button"
+            onClick={(evt) => {
+              evt.preventDefault()
+              dispatch(userDetails(fields));
+            }}
+          >
+            Signin
+          </button>
 
           <div className="signin__dash">
             <div>——————</div>

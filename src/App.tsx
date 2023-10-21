@@ -1,20 +1,24 @@
 import "./App.scss";
 import { Routes, Route } from "react-router-dom";
-import Home from "./Components/pages/Home";
-import MenWear from "./Components/pages/Menwear";
-import WomenWear from "./Components/pages/WomenWear";
-import MarketPlace from "./Components/pages/MarketPlace";
+import PublicRouteTemplate from "./Components/Templates/PublicRouteTemplate/PublicRouteTemplate";
 import Cart from "./Components/pages/Cart";
+import PrivateRoute from "./Config/PrivateRoute";
+// import HomePageTemplate from "./Components/Templates/HomePage/HomePageTemplate";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="MenWear" element={<MenWear />} />
-        <Route path="WomenWear" element={<WomenWear />} />
-        <Route path="MarketPlace" element={<MarketPlace />} />
-        <Route path="Cart" element={<Cart />} />
+        <Route path="*" element={<PublicRouteTemplate />} />
+        {/* <Route path="/HomePage" element={<HomePageTemplate/>}/> */}
+        <Route
+          path="*"
+          element={
+            <PrivateRoute>
+              <Cart />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </div>
   );

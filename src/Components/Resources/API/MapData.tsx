@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "../styles/MapData.scss";
 import LazyLoading from "./ProductsLazyLoading.jsx";
-import Modal from "../../Templates/ProductDetails";
+import Modal from "../../Organism/ProductDetails/ProductDetails";
 import AddToCart from "../Cart/AddToCart";
 import Rating from "../Cart/Rating";
 import Discount from "../Prices/Discount";

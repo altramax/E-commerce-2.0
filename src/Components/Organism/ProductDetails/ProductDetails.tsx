@@ -1,6 +1,5 @@
-import "./styles/Modal.scss";
-import { Fragment } from "react";
-import AddToCart from "../Resources/Cart/AddToCart";
+import ProductDetailsStyle from "./ProductDetailsStyle";
+import AddToCart from "../../Resources/Cart/AddToCart";
 import { GrLinkDown } from "react-icons/gr";
 
 type propsType = {
@@ -14,9 +13,9 @@ type propsType = {
   id: number;
 };
 
-export default function Modal(props: propsType) {
+const Modal = (props: propsType):JSX.Element => {
   return (
-    <Fragment>
+    <ProductDetailsStyle>
       <div className="overlayModal" onClick={props.cancle}></div>
       <div className="ModalContainer">
         <div className="cancleIcon" onClick={props.cancle}>
@@ -56,6 +55,7 @@ export default function Modal(props: propsType) {
           </div>
         </div>
       </div>
-    </Fragment>
+    </ProductDetailsStyle>
   );
 }
+export default Modal

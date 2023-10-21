@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { MdDeleteOutline } from "react-icons/md";
-import del from "../assets/del.jpg";
+import del from "../../assets/Icons/del.jpg";
 
 type quantity = {
   id: number;

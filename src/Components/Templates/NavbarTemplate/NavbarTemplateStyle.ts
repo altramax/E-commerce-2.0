@@ -1,5 +1,7 @@
-$breakpoint-tablet: 768px;
-$breakpoint-desktop: 1280px;
+import styled from "styled-components";
+import { devices } from "../../Media Queries/Media"
+
+const NavbarStyle = styled.div`
 
 .NavContainer {
   z-index: 2;
@@ -89,7 +91,7 @@ $breakpoint-desktop: 1280px;
   }
 }
 
-@media (min-width: $breakpoint-tablet) {
+@media  ${devices.tablet} {
   .NavContainer {
     height: 4rem;
     padding: 0 2rem;
@@ -132,7 +134,7 @@ $breakpoint-desktop: 1280px;
   }
 }
 
-@media (min-width: $breakpoint-desktop) {
+@media ${devices.laptop}{
   .NavContainer {
     padding: 0 3rem;
     .Logo {
@@ -152,3 +154,6 @@ $breakpoint-desktop: 1280px;
     }
   }
 }
+
+`;
+export default NavbarStyle;
