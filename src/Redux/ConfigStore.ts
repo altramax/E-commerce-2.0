@@ -2,7 +2,6 @@ import { configureStore} from "@reduxjs/toolkit";
 import { UserAuthSlice } from "./AuthSlice";
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
-import thunk from 'redux-thunk';
 
 const persistConfig = {
   key: 'root',
@@ -16,7 +15,11 @@ export const store = configureStore ({
      user: persistedReducer
     },
     devTools: process.env.NODE_ENV !== 'production',
-    middleware: [thunk]
+    middleware: getDefaultMiddleware => getDefaultMiddleware({
+      thunk: {
+        extraArgument: ""
+      }
+    })
 })
 
 export const persistor = persistStore(store)

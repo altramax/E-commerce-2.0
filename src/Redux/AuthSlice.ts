@@ -21,7 +21,7 @@ type propsType = {
 
 export const userDetails = createAsyncThunk(
   "newUser/signin",
-  async (arg: {email: string, password: string}) => {
+  async (arg: propsType) => {
     const { email, password } = arg;
     let user = await createUserWithEmailAndPassword(auth, email, password);
 

@@ -77,7 +77,7 @@ if(user.value){
           <button
             className="button"
             onClick={(evt) => {
-              evt.preventDefault()
+              evt.preventDefault();
               dispatch(userDetails(fields));
             }}
           >
