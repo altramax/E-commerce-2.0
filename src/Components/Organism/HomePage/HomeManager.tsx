@@ -65,21 +65,21 @@ const HomeManager = (): JSX.Element => {
         <div className="shops">
           <div className="shopType">
             <img src={men} alt="" className="shopImg" />
-            <Link to="/MenWear" className="shopButton">
+            <Link to="/mensWear" className="shopButton">
               <span>Shop for Men</span>
               <BsArrowRight />
             </Link>
           </div>
           <div className="shopType">
             <img src={women} alt="" className="shopImg" />
-            <Link to="/WomenWear" className="shopButton">
+            <Link to="/womenWear" className="shopButton">
               <span>Shop for Women</span>
               <BsArrowRight />
             </Link>
           </div>
           <div className="shopType">
             <img src={market} alt="" className="shopImg" />
-            <Link to="/MarketPlace" className="shopButton">
+            <Link to="/marketPlace" className="shopButton">
               <span>Super Store</span>
               <BsArrowRight />
             </Link>

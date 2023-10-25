@@ -1,4 +1,4 @@
-import MapData from "../../Resources/API/MapData";
+import MapData from "../../Organism/API/AllProducts";
 import Footer from "../../Organism/Footer/Footer";
 import Note from "../../Organism/NoteArea/NoteArea";
 

@@ -1,6 +1,6 @@
 import Footer from "../../Organism/Footer/Footer";
 import DiscountHeader from "../../Organism/DiscountHeader/DiscountHeader";
-import FilterData from "../../Resources/API/FilterData";
+import FilterData from "../../Organism/API/FilteredProducts";
 
 const WomenWearTemplate = () => {
   return (

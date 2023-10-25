@@ -1,5 +1,5 @@
 import ProductDetailsStyle from "./ProductDetailsStyle";
-import AddToCart from "../../Resources/Cart/AddToCart";
+import AddToCart from "../AddToCart/AddToCart";
 import { GrLinkDown } from "react-icons/gr";
 
 type propsType = {
