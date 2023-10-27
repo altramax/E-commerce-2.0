@@ -6,16 +6,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import cancle from "../../assets/Icons/cancle.svg";
 
-// type signinType = {
-//   close: any;
-// }
 
 type fieldsType = {
   email: string;
   password: string;
 };
 
-const SignInModal = (): JSX.Element => {
+type signinType = {
+  signUp : any
+}
+
+const SignInModal = ({signUp}:signinType): JSX.Element => {
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const SignInModal = (): JSX.Element => {
     await dispatch(googleLogin()).then(() => {});
   };
 
-  const signup = () => {};
+
   return (
     <SignInModalStyle>
       <form className={`signin `}>
@@ -93,7 +94,7 @@ const SignInModal = (): JSX.Element => {
           </div>
 
           <p className="signup">
-            Don't have an account ? <span onClick={signup}> Signup</span>
+            Don't have an account ? <span onClick={signUp}> Signup</span>
           </p>
         </div>
       </form>

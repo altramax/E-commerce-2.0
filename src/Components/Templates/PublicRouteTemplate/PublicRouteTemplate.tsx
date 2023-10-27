@@ -9,7 +9,6 @@ const PublicRouteTemplate = () => {
     <PublicRouteTemplateStyle>
         <Navbar/>
         <PublicRoutePath/>
-        <PrivateRouthPath/>
     </PublicRouteTemplateStyle>
   )
 }

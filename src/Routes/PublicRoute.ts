@@ -3,8 +3,8 @@ import MensWearTemplate from "../Components/Templates/MensWearTemplate/MenwearTe
 import WomenWearTemplate from "../Components/Templates/WomenWearTemplate/WomenWearTemplate";
 import MarketPlaceTemplate from "../Components/Templates/MarketPlaceTemplate/MarketPlaceTemplate";
 import Cart from "../Components/Templates/CartTemplate/Cart";
-import SignInModal from "../Components/Organism/SignInModal/SignInModal";
 import UserProfileTemplate from "../Components/Templates/UserProfileTemplate/UserProfileTemplate";
+import AccessoriesTemplate from "../Components/Templates/AccessoriesTemplate/AccessoriesTemplate";
 
 const PublicRoutes = [
   {
@@ -45,8 +45,16 @@ const PublicRoutes = [
   {
     elements: [
         {
-         path: "/userProfile",
+         path: "/userprofile",
          component: UserProfileTemplate,
+         }
+        ],
+  },
+  {
+    elements: [
+        {
+         path: "/accessories",
+         component: AccessoriesTemplate,
          }
         ],
   },

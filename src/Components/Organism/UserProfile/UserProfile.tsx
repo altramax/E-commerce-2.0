@@ -1,12 +1,19 @@
-import UserProfileStyle from "./UserProfileStyle"
+import UserProfileStyle from "./UserProfileStyle";
+import UserProfileMenu from "../UserProfileMenu/UserProfileMenu";
+import PrivateRouthPath from "../../../Routes/PrivateRoutePath";
 
 const UserProfile = (): JSX.Element => {
   return (
     <UserProfileStyle>
-        <h1>UserProfileOpens</h1>
-
+      <h1>UserProfile</h1>
+      <div className="user__profile__body">
+        <div className="user__profile__menu">
+          <UserProfileMenu />
+        </div>
+        <PrivateRouthPath />
+      </div>
     </UserProfileStyle>
-  )
-}
+  );
+};
 
 export default UserProfile;

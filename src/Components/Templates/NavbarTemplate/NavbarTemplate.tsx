@@ -3,20 +3,20 @@ import { Link, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import cartIcon from "../../assets/Icons/cart.png";
+import profileActive from "../../assets/Icons/profile-active.svg";
 import profileIcon from "../../assets/Icons/profile-icon.svg";
 import { MdClear } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
-import SignInModal from "../../Organism/SignInModal/SignInModal";
-import { useAppDispatch, useAppSelector} from "../../../Redux/Hooks"
-import { logOut } from "../../../Redux/AuthSlice";
+import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
 import { useNavigate } from "react-router-dom";
+import { logOut } from "../../../Redux/AuthSlice";
 
 const Navbar = (): JSX.Element => {
-  const [toggle, setToggle] = useState<boolean>(false);
-  const [img, setImg] = useState<boolean>(true);
+  const [menuIcon, setMenuIcon] = useState<boolean>(false);
   const [notification, setNotification] = useState<number | null>(null);
+  const [profileLinks, setProfileLinks] = useState<boolean>(false);
   const [depend, setDepend] = useState<any>(null);
-  const user = useAppSelector(state=> state.user);
+  const userId = useAppSelector((state) => state.user.userId);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -37,11 +37,17 @@ const Navbar = (): JSX.Element => {
   };
 
   const dropdownHandler = () => {
-    setToggle(!toggle);
-    setImg(!img);
+    setMenuIcon(!menuIcon);
   };
 
+  const profileMenuHandler = () => {
+    setProfileLinks(!profileLinks);
+  };
 
+  const logoutUser = () => {
+    dispatch(logOut());
+    navigate(-1);
+  };
 
   return (
     <NavbarStyle>
@@ -51,43 +57,72 @@ const Navbar = (): JSX.Element => {
             OneStore
           </Link>
 
-          <div id="linkGroup" className={toggle ? "linkgroup" : "hidden"}>
-            <NavLink to="/menswear" className="Link">
+          <div id="linkGroup" className={menuIcon ? "linkgroup" : "hidden"}>
+            <Link to="/menswear" className="Link">
               Men
-            </NavLink>
+            </Link>
             <Link to="/womenwear" className="Link">
               Women
+            </Link>
+            <Link to="/womenwear" className="Link">
+              Accessories
             </Link>
             <Link to="/marketplace" className="Link">
               Store
             </Link>
           </div>
+
           <div
-            className={toggle ? "overlay" : "hidden"}
+            className={menuIcon ? "overlay" : "hidden"}
             onClick={dropdownHandler}
           ></div>
-          <div className="carthan">
-            <div className="hamburger" onClick={dropdownHandler}>
-              {img ? <GiHamburgerMenu size={30} /> : <MdClear size={30} />}
+          <div
+            className={profileLinks ? "overlay" : "hidden"}
+            onClick={profileMenuHandler}
+          ></div>
+
+          <div className="cart__hamburger">
+         
+            <div className="user__profile__group" onClick={profileMenuHandler}>
+              <div className="user__profile__group__title">
+                <div className="profile__icon"></div>
+                {userId !== "" ? <p>Hi Ezekiel</p> : null}
+              </div>
+              {/* {!profileLinks ? <p className="hover">Profile</p> : null} */}
+              <div
+                className={`profile__links  ${
+                  profileLinks ? "Open" : "hidden"
+                }  `}
+              >
+                <Link to="/userprofile" className="user__profile">
+                  My Account
+                </Link>
+                {userId !== "" ? (
+                  <div className="profile__link__sub">
+                    <Link to="#" className="user__profile">
+                      Saved Item
+                    </Link>
+                    <Link to="#" className="user__profile">
+                      My Orders
+                    </Link>
+                    <button onClick={logoutUser}>Logout</button>
+                  </div>
+                ) : null}
+              </div>
             </div>
-
-
-            <Link to="/userProfile" className="Link">
-              <img src={profileIcon} alt="User Profile" className="cart" />
-            </Link>
-
-
-
+            <div className="hamburger" onClick={dropdownHandler}>
+              {!menuIcon ? (
+                <GiHamburgerMenu size={30} />
+              ) : (
+                <MdClear size={30} />
+              )}
+            </div>
 
             <Link to="/cart" className="Link">
               <p className="cartNotificationIcon">{notification}</p>
               <img src={cartIcon} alt="Cart" className="cart" />
             </Link>
           </div>
-        <p onClick={()=>{
-          dispatch(logOut())
-          navigate("/")
-        }}>logout </p>
         </div>
       </>
     </NavbarStyle>
