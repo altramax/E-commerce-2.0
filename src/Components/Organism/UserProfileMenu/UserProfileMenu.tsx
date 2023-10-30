@@ -5,7 +5,7 @@ const UserProfileMenu = () => {
   return (
     <UserProfileMenuStyle>
       <div>SideBar</div>
-      <Link to="/">
+      <Link to="/userprofile">
         <p> User Information</p>
       </Link>
     </UserProfileMenuStyle>

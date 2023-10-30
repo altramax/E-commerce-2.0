@@ -6,6 +6,9 @@ import Modal from "../ProductDetails/ProductDetails";
 import AddToCart from "../AddToCart/AddToCart.js";
 import Rating from "../../Molecules/Rating/Rating.js";
 import Discount from "../Prices/Discount";
+import { useAppDispatch } from "../../../Redux/Hooks.js";
+import {} from "../../../Redux/AllProductsSlice.js"
+import { networkError, successful } from "../../../Redux/AlertSlice.js";
 
 type propsType = {
   filter: number;
@@ -25,15 +28,24 @@ type dataStructure = {
 const AllProducts = (props: propsType): JSX.Element => {
   const [data, setData] = useState<dataStructure[] | null>();
   const [display, setDisplay] = useState<JSX.Element | null>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    axios
-      .get("https://fakestoreapi.com/products")
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((res) => console.log(res.message));
-  }, []);
+    getProducts();
+  },[]);
+
+  const getProducts = async () => {
+    try {
+      const products = await axios.get("http://localhost:9000/products");
+      setData(products.data);
+      dispatch(successful())
+    } catch (error: any) {
+      console.log(error);
+      if(error.message === "Network Error"){
+        dispatch(networkError())
+      }
+    }
+  };
 
   const cancleHandler = () => {
     setDisplay(null);
@@ -63,6 +75,8 @@ const AllProducts = (props: propsType): JSX.Element => {
         });
     }
   };
+
+  const renderAlert = (data: any) => {};
 
   return (
     <AllProductsStyle>

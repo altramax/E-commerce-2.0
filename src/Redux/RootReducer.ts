@@ -1,10 +1,12 @@
+import { combineReducers } from "@reduxjs/toolkit";
 import  UserAuthSlice  from "./AuthSlice";
 import  AllProductsSlice  from "./AllProductsSlice";
-import { combineReducers } from "@reduxjs/toolkit";
+import AlertSlice from "./AlertSlice";
 
  const rootReducer = combineReducers({
    user : UserAuthSlice,
-   products :  AllProductsSlice
+   products :  AllProductsSlice,
+   alert : AlertSlice
 });
 
 export default rootReducer;

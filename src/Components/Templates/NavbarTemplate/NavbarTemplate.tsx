@@ -10,13 +10,17 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
 import { useNavigate } from "react-router-dom";
 import { logOut } from "../../../Redux/AuthSlice";
+import { otherErrors } from "../../../Redux/AlertSlice";
 
 const Navbar = (): JSX.Element => {
   const [menuIcon, setMenuIcon] = useState<boolean>(false);
   const [notification, setNotification] = useState<number | null>(null);
   const [profileLinks, setProfileLinks] = useState<boolean>(false);
+  const [networkResponse, setNetworkResponse] = useState<boolean>(false);
   const [depend, setDepend] = useState<any>(null);
   const userId = useAppSelector((state) => state.user.userId);
+  const alert = useAppSelector((state) => state.alert);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -24,7 +28,12 @@ const Navbar = (): JSX.Element => {
 
   useEffect(() => {
     cartCountUpdate();
+    d();
   }, []);
+
+  useEffect(() => {
+    handleNetWorkChange();
+  }, [alert.message]);
 
   const cartCountUpdate = async () => {
     try {
@@ -49,10 +58,29 @@ const Navbar = (): JSX.Element => {
     navigate(-1);
   };
 
+  const d = () => {
+    if (alert.message !== "") {
+      setNetworkResponse(true);
+    }
+  };
+
+  const handleNetWorkChange = () => {
+    if (alert.message !== "") {
+      setNetworkResponse(true);
+      setTimeout(() => {
+        setNetworkResponse(false);
+        dispatch(otherErrors(""));
+      }, 2000);
+    }
+  };
+
   return (
     <NavbarStyle>
       <>
         <div className="NavContainer">
+          {networkResponse && (
+            <div className="network__response">{alert.message}</div>
+          )}
           <Link to="/" className="Logo">
             OneStore
           </Link>
@@ -82,7 +110,6 @@ const Navbar = (): JSX.Element => {
           ></div>
 
           <div className="cart__hamburger">
-         
             <div className="user__profile__group" onClick={profileMenuHandler}>
               <div className="user__profile__group__title">
                 <div className="profile__icon"></div>

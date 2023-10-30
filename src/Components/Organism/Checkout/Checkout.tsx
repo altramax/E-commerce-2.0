@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import cancle from "../assets/cancle.svg";
+import cancle from "../../assets/Icons/cancle.svg";
 import Confirm from "../../Molecules/Receipt/Receipt";
 import CheckoutStyle from "./CheckoutStyle";
 import axios from "axios";

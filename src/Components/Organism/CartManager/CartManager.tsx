@@ -5,6 +5,7 @@ import Discount from "../Prices/Discount";
 import NewPrice from "../Prices/NewPrice";
 import ProductQantity from "../../Molecules/ProductQuantity/ProductQuantity";
 import empty from "../../assets/Icons/empty.jpg";
+import Checkout from "../Checkout/Checkout";
 
 type getStructure = {
   id: number;
@@ -98,7 +99,7 @@ const CartManager = (): JSX.Element => {
             </h3>
           </div>
         )}
-        {/* {display && <Checkout func={clearHandler} arr={array}/>} */}
+        {display && <Checkout func={clearHandler} arr={array}/>}
       </div>
     </CartManagerStyle>
   );
