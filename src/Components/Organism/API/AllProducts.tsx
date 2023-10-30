@@ -39,6 +39,7 @@ const AllProducts = (props: propsType): JSX.Element => {
       const products = await axios.get("http://localhost:9000/products");
       setData(products.data);
       dispatch(successful())
+      console.log(products);
     } catch (error: any) {
       console.log(error);
       if(error.message === "Network Error"){
