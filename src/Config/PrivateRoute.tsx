@@ -7,6 +7,7 @@ type privatetype = {children: JSX.Element}
 
  const PrivateRoute = ({children}:privatetype) => {
     const state = useAppSelector((state: RootState)=> state.user)
+    console.log(state);
     const auth = state.userId
     console.log(auth);
    return auth !== "" ? children : null;

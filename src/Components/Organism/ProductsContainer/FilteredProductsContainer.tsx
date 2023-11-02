@@ -1,17 +1,17 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import AllProductsStyle from "./AllProductsStyle.js";
+import AllProductsStyle from "../ProductsContainer/AllProductsStyle.js";
 import LazyLoading from "../../Molecules/ProductsLazyLoading/ProductsLazyLoading.js";
 import Modal from "../ProductDetails/ProductDetails";
 import AddToCart from "../AddToCart/AddToCart.js";
 import Rating from "../../Molecules/Rating/Rating.js";
 import Discount from "../Prices/Discount";
-import { useAppDispatch } from "../../../Redux/Hooks.js";
-import {} from "../../../Redux/AllProductsSlice.js"
-import { networkError, successful } from "../../../Redux/AlertSlice.js";
+import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks.js";
+import { getProducts } from "../../../Redux/AllProductsSlice.js";
+
 
 type propsType = {
-  filter: number;
+  filter: string;
 };
 
 type dataStructure = {
@@ -25,28 +25,15 @@ type dataStructure = {
   modal: JSX.Element;
 };
 
-const AllProducts = (props: propsType): JSX.Element => {
-  const [data, setData] = useState<dataStructure[] | null>();
-  const [display, setDisplay] = useState<JSX.Element | null>();
+const FilteredProducts = (props: propsType): JSX.Element => {
+
+const [display, setDisplay] = useState<JSX.Element | null>();
+  const data = useAppSelector((state) => state.products.products);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getProducts();
-  },[]);
-
-  const getProducts = async () => {
-    try {
-      const products = await axios.get("http://localhost:9000/products");
-      setData(products.data);
-      dispatch(successful())
-      console.log(products);
-    } catch (error: any) {
-      console.log(error);
-      if(error.message === "Network Error"){
-        dispatch(networkError())
-      }
-    }
-  };
+    dispatch(getProducts());
+  }, []);
 
   const cancleHandler = () => {
     setDisplay(null);
@@ -55,7 +42,7 @@ const AllProducts = (props: propsType): JSX.Element => {
   const modalHandler = (info: dataStructure) => {
     {
       data &&
-        data.map((sub) => {
+        data.map((sub:any) => {
           if (sub.id === info.id) {
             {
               sub.modal = (
@@ -77,15 +64,14 @@ const AllProducts = (props: propsType): JSX.Element => {
     }
   };
 
-  const renderAlert = (data: any) => {};
-
   return (
     <AllProductsStyle>
       <div className="CardGroup">
         {display}
         {data ? (
-          data.map((res, i) => {
-            if (i < props.filter) {
+          data.map((res: any) => {
+            let [w, p] = res.category.split(" ");
+            if (w === props.filter) {
               return (
                 <div className="CardContainer" key={res.id}>
                   <div
@@ -94,7 +80,7 @@ const AllProducts = (props: propsType): JSX.Element => {
                     }}
                   >
                     <Discount value={res.price} />
-                    <img src={res.image} alt="Product Image" />
+                    <img src={res.image} alt="Product Image" className="img" />
                     <h2>{res.title.slice(0, 36)}</h2>
                     <h3>${res.price}</h3>
                   </div>
@@ -119,4 +105,4 @@ const AllProducts = (props: propsType): JSX.Element => {
   );
 };
 
-export default AllProducts;
+export default FilteredProducts;

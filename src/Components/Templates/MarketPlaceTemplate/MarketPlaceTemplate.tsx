@@ -1,4 +1,4 @@
-import MapData from "../../Organism/API/AllProducts";
+import AllProducts from "../../Organism/ProductsContainer/AllProductsContainer";
 import Footer from "../../Organism/Footer/Footer";
 import Note from "../../Organism/NoteArea/NoteArea";
 
@@ -7,7 +7,7 @@ const MarketPlaceTemplate = () =>{
   return (
     <div>
       <Note text={info} />
-      <MapData filter={23} />
+     <AllProducts/>
       <Footer />
     </div>
   );

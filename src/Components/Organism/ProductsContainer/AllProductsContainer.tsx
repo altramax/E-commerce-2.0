@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import AllProductsStyle from "./AllProductsStyle.js";
 import LazyLoading from "../../Molecules/ProductsLazyLoading/ProductsLazyLoading.js";
@@ -6,10 +5,8 @@ import Modal from "../ProductDetails/ProductDetails";
 import AddToCart from "../AddToCart/AddToCart.js";
 import Rating from "../../Molecules/Rating/Rating.js";
 import Discount from "../Prices/Discount";
-
-type propsType = {
-  filter: string;
-};
+import { getProducts } from "../../../Redux/AllProductsSlice.js";
+import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks.js";
 
 type dataStructure = {
   title: string;
@@ -22,17 +19,13 @@ type dataStructure = {
   modal: JSX.Element;
 };
 
-const FilteredProducts = (props: propsType): JSX.Element => {
-  const [data, setData] = useState<dataStructure[] | null>();
+const AllProducts = (): JSX.Element => {
   const [display, setDisplay] = useState<JSX.Element | null>();
+  const data = useAppSelector((state) => state.products);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    axios
-      .get("https://fakestoreapi.com/products")
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((res) => res);
+    dispatch(getProducts());
   }, []);
 
   const cancleHandler = () => {
@@ -42,7 +35,7 @@ const FilteredProducts = (props: propsType): JSX.Element => {
   const modalHandler = (info: dataStructure) => {
     {
       data &&
-        data.map((sub) => {
+        data.products.map((sub: any) => {
           if (sub.id === info.id) {
             {
               sub.modal = (
@@ -64,38 +57,37 @@ const FilteredProducts = (props: propsType): JSX.Element => {
     }
   };
 
+  const renderAlert = (data: any) => {};
+
   return (
     <AllProductsStyle>
       <div className="CardGroup">
         {display}
         {data ? (
-          data.map((res) => {
-            let [w, p] = res.category.split(" ");
-            if (w === props.filter) {
-              return (
-                <div className="CardContainer" key={res.id}>
-                  <div
-                    onClick={() => {
-                      modalHandler(res);
-                    }}
-                  >
-                    <Discount value={res.price} />
-                    <img src={res.image} alt="Product Image" className="img" />
-                    <h2>{res.title.slice(0, 36)}</h2>
-                    <h3>${res.price}</h3>
-                  </div>
-                  <AddToCart
-                    title={res.title}
-                    category={res.category}
-                    description={res.description}
-                    image={res.image}
-                    price={res.price}
-                    rating={res.rating}
-                    id={res.id}
-                  />
+          data.products.map((res: any, i: number) => {
+            return (
+              <div className="CardContainer" key={res.id}>
+                <div
+                  onClick={() => {
+                    modalHandler(res);
+                  }}
+                >
+                  <Discount value={res.price} />
+                  <img src={res.image} alt="Product Image" />
+                  <h2>{res.title.slice(0, 36)}</h2>
+                  <h3>${res.price}</h3>
                 </div>
-              );
-            }
+                <AddToCart
+                  title={res.title}
+                  category={res.category}
+                  description={res.description}
+                  image={res.image}
+                  price={res.price}
+                  rating={res.rating}
+                  id={res.id}
+                />
+              </div>
+            );
           })
         ) : (
           <LazyLoading />
@@ -105,4 +97,4 @@ const FilteredProducts = (props: propsType): JSX.Element => {
   );
 };
 
-export default FilteredProducts;
+export default AllProducts;

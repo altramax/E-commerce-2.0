@@ -12,7 +12,7 @@ const SignInModalStyle = styled.div`
   position: fixed;
   top: 0;
   width: 100vw;
-  z-index: 5000;
+  z-index: 50;
   @keyframes show-bg {
     0% {
       background: rgba(0, 0, 0, 0);

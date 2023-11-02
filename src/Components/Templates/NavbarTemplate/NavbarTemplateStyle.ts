@@ -3,23 +3,21 @@ import { devices } from "../../Media Queries/Media";
 import bg from "../../assets/Icons/profile-icon.svg";
 import bgActive from "../../assets/Icons/profile-active.svg";
 
-
-
-
 const NavbarStyle = styled.div`
-.network__response{
-  position: fixed;
-  top: 0;
-  right: 0;
-  font-size: 12px;
-  padding: 5px 10px;
-  background-color: green;
-  color: #fff;
-  margin: 24px 24px 0 0;
-  z-index: 5000;
-  border-radius: 6px;
-
-}
+  .network__response {
+    animation: growDown 300ms ease-in-out forwards;
+    transform-origin: top center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 12px;
+    padding: 5px 10px;
+    background-color: green;
+    color: #fff;
+    margin: 24px 24px 0 0;
+    z-index: 200;
+    border-radius: 6px;
+  }
 
   .NavContainer {
     z-index: 2;
@@ -34,7 +32,6 @@ const NavbarStyle = styled.div`
     top: 0;
     width: 95%;
     background-color: #fff;
-
 
     .Logo {
       font-size: 1.5rem;
@@ -63,14 +60,12 @@ const NavbarStyle = styled.div`
       margin-right: 10px;
     }
 
-
     .user__profile__group__title {
-     
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 12px;
-   
+
       .profile__icon {
         width: 1.5rem;
         height: 1.5rem;
@@ -80,19 +75,16 @@ const NavbarStyle = styled.div`
     }
 
     .user__profile__group__title:hover {
-      .profile__icon{
+      .profile__icon {
         background-image: url(${bgActive});
         backgroung-size: 1.5rem;
       }
-      p{
+      p {
         color: #e70680;
       }
     }
 
-    
-
-    .profile__links { 
-   
+    .profile__links {
       animation: growDown 300ms ease-in-out forwards;
       transform-origin: top center;
       position: absolute;
@@ -106,26 +98,25 @@ const NavbarStyle = styled.div`
       .profile__link__sub {
         display: flex;
         flex-direction: column;
-        button{
-        border: none;
-        padding: 5px 7px;
-        margin-top: 10px;
-        cursor: pointer;
+        button {
+          border: none;
+          padding: 5px 7px;
+          margin-top: 10px;
+          cursor: pointer;
         }
       }
 
       @keyframes growDown {
         0% {
-            transform: scaleY(0)
+          transform: scaleY(0);
         }
         80% {
-            transform: scaleY(1.1)
+          transform: scaleY(1.1);
         }
         100% {
-            transform: scaleY(1)
+          transform: scaleY(1);
         }
-    }
-
+      }
 
       .user__profile {
         color: black;

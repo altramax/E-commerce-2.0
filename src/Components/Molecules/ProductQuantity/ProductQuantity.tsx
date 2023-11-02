@@ -2,79 +2,136 @@ import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { MdDeleteOutline } from "react-icons/md";
 import del from "../../assets/Icons/del.jpg";
+import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
+import { deleteItem, getCartItem, updateItem } from "../../../Redux/CartSlice";
 
-type quantity = {
-  id: number;
-};
+type idType = {
+  id: number
+}
 
-export default function ProductQantity(props: quantity) {
+
+export default function ProductQantity( {id}:idType) {
   const [count, setCount] = useState<number>(0);
-  const [depend, setDepend] = useState<boolean>(false);
-  let uri = "http://localhost:3000/products/";
+  const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
+  const products = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+
+  let item = products.cartItems.data.filter((res: any) => {
+    return res.id === id;
+  })[0];
+  // console.log(item.quantity);
+
 
   useEffect(() => {
-    axios
-      .get(uri + props.id)
-      .then((res) => {
-        setCount(res.data.quantity);
-      })
-      .catch((err) => err);
-  }, [depend]);
+   setCount(item.quantity)
+  });
 
-  const increaseHandler = () => {
-    let g = count + 1;
-    axios
-      .patch(
-        uri + props.id,
-        {
-          quantity: g,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        }
-      )
-      .catch((err) => console.log(err));
-    window.location.reload();
-  };
-
-  const decreaseHandler = () => {
-    if (count >= 1) {
-      let g = count - 1;
-      axios
-        .patch(
-          uri + props.id,
-          {
-            quantity: g,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-          }
-        )
-        .catch((err) => console.log(err));
+  const quantityHandler = async(action: string) => {
+    if (action === "increase") {
+      let count = item.quantity + 1;
+      let obj = {
+        id: id,
+        quantity: count
+      }
+      dispatch(updateItem(obj))
+      dispatch(getCartItem())
+    }else if (action === "decrease"){
+      let count = item.quantity - 1;
+      let obj = {
+        id: id,
+        quantity: count
+      }
+      dispatch(updateItem(obj))
+      dispatch(getCartItem())
     }
-    window.location.reload();
   };
+
+  // const increaseHandler = () => {
+  //   let g = count + 1;
+  //   axios
+  //     .patch(
+  //       uri + id,
+  //       {
+  //         quantity: g,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Accept: "application/json",
+  //         },
+  //       }
+  //     )
+  //     .catch((err) => console.log(err));
+  //   window.location.reload();
+  // };
+
+  // const decreaseHandler = () => {
+  //   if (count >= 1) {
+  //     let g = count - 1;
+  //     axios
+  //       .patch(
+  //         uri + id,
+  //         {
+  //           quantity: g,
+  //         },
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Accept: "application/json",
+  //           },
+  //         }
+  //       )
+  //       .catch((err) => console.log(err));
+  //   }
+  //   window.location.reload();
+  // };
 
   const removeProduct = () => {
-    axios.delete(uri + props.id).catch((err) => console.log(err));
-    setDepend(!depend);
-    window.location.reload();
+    // axios.delete(uri + id).catch((err) => console.log(err));
+    // setDepend(!depend);
+    // window.location.reload();
+    dispatch(deleteItem(id))
   };
 
   return (
     <Fragment>
-      {depend && (
+    
+      <div className="quantityGroup">
+        <div
+          className="removeProduct"
+          onClick={() => {
+            setOpenConfirmation(true);
+          }}
+        >
+          <MdDeleteOutline />
+          REMOVE
+        </div>
+        <div className="CountGroup">
+          <span
+            onClick={() => {
+              quantityHandler("decrease")
+            }}
+            className="countButton"
+          >
+            -
+          </span>
+          <span className="counter">{count}</span>
+          <span
+            onClick={() => {
+              quantityHandler("increase")
+            }}
+            className="countButton"
+          >
+            +
+          </span>
+        </div>
+      </div>
+      {openConfirmation && (
         <div>
           <div
             className="delOverlay"
             onClick={() => {
-              setDepend(false);
+              setOpenConfirmation(false);
             }}
           ></div>
           <div className="deleteModal">
@@ -84,7 +141,7 @@ export default function ProductQantity(props: quantity) {
               <button
                 className="btnCancle"
                 onClick={() => {
-                  setDepend(false);
+                  setOpenConfirmation(false);
                 }}
               >
                 Cancel
@@ -96,36 +153,6 @@ export default function ProductQantity(props: quantity) {
           </div>
         </div>
       )}
-      <div className="quantityGroup">
-        <div
-          className="removeProduct"
-          onClick={() => {
-            setDepend(true);
-          }}
-        >
-          <MdDeleteOutline />
-          REMOVE
-        </div>
-        <div className="CountGroup">
-          <span
-            onClick={() => {
-              decreaseHandler();
-            }}
-            className="countButton"
-          >
-            -
-          </span>
-          <span className="counter">{count}</span>
-          <span
-            onClick={() => {
-              increaseHandler();
-            }}
-            className="countButton"
-          >
-            +
-          </span>
-        </div>
-      </div>
     </Fragment>
   );
 }

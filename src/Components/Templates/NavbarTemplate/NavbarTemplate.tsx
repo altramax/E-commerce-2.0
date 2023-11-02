@@ -1,49 +1,30 @@
 import NavbarStyle from "./NavbarTemplateStyle";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import cartIcon from "../../assets/Icons/cart.png";
-import profileActive from "../../assets/Icons/profile-active.svg";
-import profileIcon from "../../assets/Icons/profile-icon.svg";
 import { MdClear } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
 import { useNavigate } from "react-router-dom";
-import { logOut } from "../../../Redux/AuthSlice";
+import { logOut, resetErrorMessage } from "../../../Redux/AuthSlice";
 import { otherErrors } from "../../../Redux/AlertSlice";
 
 const Navbar = (): JSX.Element => {
   const [menuIcon, setMenuIcon] = useState<boolean>(false);
-  const [notification, setNotification] = useState<number | null>(null);
+  // const [notification, setNotification] = useState<number | null>(null);
   const [profileLinks, setProfileLinks] = useState<boolean>(false);
-  const [networkResponse, setNetworkResponse] = useState<boolean>(false);
-  const [depend, setDepend] = useState<any>(null);
+  const [successResponse, setSuccessResponse] = useState<boolean>(false);
+  const [errorResponse, setErrorResponse] = useState<boolean>(false);
   const userId = useAppSelector((state) => state.user.userId);
   const alert = useAppSelector((state) => state.alert);
-
+  const errorMessage = useAppSelector((state) => state.user);
+  const cart = useAppSelector(state=>state.cart)
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const url = "http://localhost:3000/products";
-
-  useEffect(() => {
-    cartCountUpdate();
-    d();
-  }, []);
-
   useEffect(() => {
     handleNetWorkChange();
-  }, [alert.message]);
-
-  const cartCountUpdate = async () => {
-    try {
-      let res = await axios.get(url);
-      setDepend(res.data);
-      setNotification(res.data.length);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [alert.message, errorMessage.message, cart.cartCount]);
 
   const dropdownHandler = () => {
     setMenuIcon(!menuIcon);
@@ -60,17 +41,23 @@ const Navbar = (): JSX.Element => {
 
   const d = () => {
     if (alert.message !== "") {
-      setNetworkResponse(true);
+      setSuccessResponse(true);
     }
   };
 
   const handleNetWorkChange = () => {
     if (alert.message !== "") {
-      setNetworkResponse(true);
+      setSuccessResponse(true);
       setTimeout(() => {
-        setNetworkResponse(false);
+        setSuccessResponse(false);
         dispatch(otherErrors(""));
-      }, 2000);
+      }, 3000);
+    } else if (errorMessage.message !== "") {
+      setErrorResponse(true);
+      setTimeout(() => {
+        setErrorResponse(false);
+        dispatch(resetErrorMessage());
+      }, 3000);
     }
   };
 
@@ -78,8 +65,11 @@ const Navbar = (): JSX.Element => {
     <NavbarStyle>
       <>
         <div className="NavContainer">
-          {networkResponse && (
+          {successResponse && (
             <div className="network__response">{alert.message}</div>
+          )}
+          {errorResponse && (
+            <div className="network__response">{errorMessage.message}</div>
           )}
           <Link to="/" className="Logo">
             OneStore
@@ -146,7 +136,7 @@ const Navbar = (): JSX.Element => {
             </div>
 
             <Link to="/cart" className="Link">
-              <p className="cartNotificationIcon">{notification}</p>
+              <p className="cartNotificationIcon">{cart.cartCount}</p>
               <img src={cartIcon} alt="Cart" className="cart" />
             </Link>
           </div>

@@ -6,6 +6,7 @@ import NewPrice from "../Prices/NewPrice";
 import ProductQantity from "../../Molecules/ProductQuantity/ProductQuantity";
 import empty from "../../assets/Icons/empty.jpg";
 import Checkout from "../Checkout/Checkout";
+import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
 
 type getStructure = {
   id: number;
@@ -19,30 +20,29 @@ type getStructure = {
 };
 
 const CartManager = (): JSX.Element => {
-  const [data, setData] = useState<getStructure[] | []>([]);
   const [array, setArray] = useState<number[]>([]);
   const [display, setDisplay] = useState<boolean>(false);
+  const cart = useAppSelector((state) => state.cart);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/products")
-      .then((res) => {
-        res.data.map((props: getStructure) => {
-          if (props.price > 100 && props.price < 200) {
-            let w = props.quantity * (props.price - props.price * (15 / 100));
-            setArray((e) => [...e, w]);
-          } else if (props.price > 200) {
-            let w = props.quantity * (props.price - props.price * (20 / 100));
-            setArray((e) => [...e, w]);
-          } else if (props.price < 100) {
-            let w = props.quantity * (props.price - props.price * (10 / 100));
-            setArray((e) => [...e, w]);
-          }
-        });
-        setData(res.data);
-      })
-      .catch((err) => err);
+    calculateTotalPrice()
   }, []);
+
+  const calculateTotalPrice = () => {
+    cart.cartItems !== undefined &&
+      cart.cartItems.data.map((res: any) => {
+        if (res.price > 100 && res.price < 200) {
+          let w = res.quantity * (res.price - res.price * (15 / 100));
+          setArray((e) => [...e, w]);
+        } else if (res.price > 200) {
+          let w = res.quantity * (res.price - res.price * (20 / 100));
+          setArray((e) => [...e, w]);
+        } else if (res.price < 100) {
+          let w = res.quantity * (res.price - res.price * (10 / 100));
+          setArray((e) => [...e, w]);
+        }
+      });
+  };
 
   const checkoutHandler = () => {
     setDisplay(true);
@@ -51,11 +51,12 @@ const CartManager = (): JSX.Element => {
     setDisplay(false);
   };
 
+  console.log(cart.cartItems.data);
   return (
     <CartManagerStyle>
       <div className="CartGroup">
-        {data?.length > 0 ? (
-          data.map((res) => {
+        {cart.cartItems !== undefined && cart.cartItems.data.length > 0 ? (
+          cart.cartItems.data.map((res: any) => {
             return (
               <div key={res.id} className="CartCard">
                 <div className="cartCardFlex">
@@ -99,7 +100,7 @@ const CartManager = (): JSX.Element => {
             </h3>
           </div>
         )}
-        {display && <Checkout func={clearHandler} arr={array}/>}
+        {display && <Checkout func={clearHandler} arr={array} />}
       </div>
     </CartManagerStyle>
   );
