@@ -3,7 +3,12 @@ import { useState, useEffect } from "react";
 import { GiShoppingCart } from "react-icons/gi";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
-import { addToCart, clearCart, getCartItem, updateItem } from "../../../Redux/CartSlice";
+import {
+  addToCart,
+  clearCart,
+  getCartItem,
+  updateItem,
+} from "../../../Redux/CartSlice";
 import { successful } from "../../../Redux/AlertSlice";
 
 export interface dataStructure {
@@ -33,8 +38,9 @@ const AddToCart = (props: dataStructure): JSX.Element => {
 
   const addCount = (data: any) => {
     let count = 0;
-    items.cartItems.map((res: any) => {
+    items.cartItems.data.map((res: any) => {
       if (res.id === data.id) {
+        console.log(res.quantity + count);
         count = res.quantity + count;
       }
     });
@@ -42,50 +48,45 @@ const AddToCart = (props: dataStructure): JSX.Element => {
   };
 
   const postHandler = async (data: dataStructure) => {
+    dispatch(clearCart(items.cartItems.data))
 
-// await axios.post(`http://localhost:9000/cart`,{
-//   id: props.id,
-//   name: props.title,
-//   img: props.image,
-//   price: props.price,
-//   quantity: count,
-//   rating: props.rating.rate,
-// }).then(res=>console.log(res))
+    // if (items.cartIds.includes(data.id) && count > 0) {
+    //   console.log("this is patch");
+    //   const update = {
+    //     id: data.id,
+    //     quantity: addCount(count),
+    //   };
+    //   await dispatch(updateItem(update));
+    //   setMessage("update");
+    //   setCount(0);
+    //  await dispatch(getCartItem());
+    //   setTimeout(() => {
+    //     setMessage("");
+    //   }, 2000);
+    // } else if (!items.cartIds.includes(data.id) && count > 0) {
+    //   console.log("this is post");
+    //   const post = {
+    //     id: props.id,
+    //     name: props.title,
+    //     img: props.image,
+    //     price: props.price,
+    //     quantity: count,
+    //     rating: props.rating.rate,
+    //   };
+    //   dispatch(addToCart(post));
+    //   setMessage("add");
+    //   setCount(0);
+    //   dispatch(getCartItem());
 
-// dispatch(clearCart(items.cartItems.data))
-    if (items.cartIds.includes(data.id) && count > 0) {
-      const update = {
-        id: data.id,
-        quantity: addCount(count),
-      };
-      await dispatch(updateItem(update));
-      setMessage("update");
-      setCount(0);
-      setTimeout(() => {
-        setMessage("");
-      }, 2000);
-    } else if (!items.cartIds.includes(data.id) && count > 0) {
-      const post = {
-        id: props.id,
-        name: props.title,
-        img: props.image,
-        price: props.price,
-        quantity: count,
-        rating: props.rating.rate,
-      };
-      dispatch(addToCart(post));
-      setMessage("add");
-      setCount(0);
-      setTimeout(() => {
-        setMessage("");
-      }, 2000);
-    } else if (count === 0) {
-      setMessage("failed");
-      setTimeout(() => {
-        setMessage("");
-      }, 2000);
-    }
-dispatch(getCartItem())
+    //   setTimeout(() => {
+    //     setMessage("");
+    //   }, 2000);
+    // } else if (count === 0) {
+    //   setMessage("failed");
+    //   setTimeout(() => {
+    //     setMessage("");
+    //   }, 2000);
+    // }
   };
 
   const increaseHandler = (info: dataStructure) => {
@@ -100,12 +101,11 @@ dispatch(getCartItem())
 
   const renderHandlerMessage = () => {
     if (message === "update") {
-     return <p className="errorMessage green">Product Updated Successfully</p>;
+      return <p className="errorMessage green">Product Updated Successfully</p>;
     } else if (message === "add") {
       return <p className="errorMessage green">Product Added Successfully</p>;
-    }
-    else if(message === "failed") {
-    return  <p className="errorMessage">Select Quantity of Product</p>;
+    } else if (message === "failed") {
+      return <p className="errorMessage">Select Quantity of Product</p>;
     }
   };
 

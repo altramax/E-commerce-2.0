@@ -26,10 +26,12 @@ const CartManager = (): JSX.Element => {
 
   useEffect(() => {
     calculateTotalPrice()
-  }, []);
+  }, [cart.quantity]);
+
+  // console.log(cart.quantity);
 
   const calculateTotalPrice = () => {
-    cart.cartItems !== undefined &&
+    cart.cartItems !== "" && cart.cartItems.data &&
       cart.cartItems.data.map((res: any) => {
         if (res.price > 100 && res.price < 200) {
           let w = res.quantity * (res.price - res.price * (15 / 100));
@@ -51,11 +53,11 @@ const CartManager = (): JSX.Element => {
     setDisplay(false);
   };
 
-  console.log(cart.cartItems.data);
+  console.log(cart.cartItems);
   return (
     <CartManagerStyle>
       <div className="CartGroup">
-        {cart.cartItems !== undefined && cart.cartItems.data.length > 0 ? (
+        {cart.cartItems !== "" && cart.cartItems.data ? (
           cart.cartItems.data.map((res: any) => {
             return (
               <div key={res.id} className="CartCard">
@@ -81,7 +83,7 @@ const CartManager = (): JSX.Element => {
             <img src={empty} alt="" />
           </div>
         )}
-        {array.length > 0 && (
+        {array && array.length > 0 && (
           <div className="subTotalContainer">
             <h3>CART SUMMARY</h3>
             <div className="subTotal">

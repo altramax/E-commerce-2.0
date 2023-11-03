@@ -63,7 +63,7 @@ const AllProducts = (): JSX.Element => {
     <AllProductsStyle>
       <div className="CardGroup">
         {display}
-        {data ? (
+        {data && data.products ? (
           data.products.map((res: any, i: number) => {
             return (
               <div className="CardContainer" key={res.id}>
