@@ -36,64 +36,59 @@ const AddToCart = (props: dataStructure): JSX.Element => {
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.cart);
 
-  const addCount = (data: any) => {
-    let count = 0;
-    items.cartItems.data.map((res: any) => {
-      if (res.id === data.id) {
-        console.log(res.quantity + count);
-        count = res.quantity + count;
-      }
-    });
-    return count;
+  const addCount = (data: number) => {
+    let item = items.cartItems.data.filter((res: any) => res.id === data)[0];
+    console.log(item.quantity, count);
+    return item.quantity + count
   };
+
 
   const postHandler = async (data: dataStructure) => {
-    dispatch(clearCart(items.cartItems.data))
-
-    // if (items.cartIds.includes(data.id) && count > 0) {
-    //   console.log("this is patch");
-    //   const update = {
-    //     id: data.id,
-    //     quantity: addCount(count),
-    //   };
-    //   await dispatch(updateItem(update));
-    //   setMessage("update");
-    //   setCount(0);
-    //  await dispatch(getCartItem());
-    //   setTimeout(() => {
-    //     setMessage("");
-    //   }, 2000);
-    // } else if (!items.cartIds.includes(data.id) && count > 0) {
-    //   console.log("this is post");
-    //   const post = {
-    //     id: props.id,
-    //     name: props.title,
-    //     img: props.image,
-    //     price: props.price,
-    //     quantity: count,
-    //     rating: props.rating.rate,
-    //   };
-    //   dispatch(addToCart(post));
-    //   setMessage("add");
-    //   setCount(0);
-    //   dispatch(getCartItem());
-
-    //   setTimeout(() => {
-    //     setMessage("");
-    //   }, 2000);
-    // } else if (count === 0) {
-    //   setMessage("failed");
-    //   setTimeout(() => {
-    //     setMessage("");
-    //   }, 2000);
-    // }
+    if (items.cartIds.includes(data.id) && count > 0) {
+      console.log("this is patch");
+      const update = {
+        id: data.id,
+        quantity: addCount(data.id),
+      };
+      console.log(update);
+      await dispatch(updateItem(update)); 
+      setMessage("update");
+      await dispatch(getCartItem());
+      setCount(0);
+      setTimeout(() => {
+        setMessage("");
+        console.log(count);
+      }, 2000);
+    } else if (!items.cartIds.includes(data.id) && count > 0) {
+      console.log("this is post");
+      const post = {
+        id: props.id,
+        name: props.title,
+        img: props.image,
+        price: props.price,
+        quantity: count,
+        rating: props.rating.rate,
+      };
+     await dispatch(addToCart(post));
+     setMessage("add");
+     await dispatch(getCartItem());
+     setCount(0);
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+    } else if (count === 0) {
+      setMessage("failed");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+    }
   };
 
-  const increaseHandler = (info: dataStructure) => {
+  const increaseHandler = () => {
     setCount(count + 1);
   };
 
-  const decreaseHandler = (info: dataStructure) => {
+  const decreaseHandler = () => {
     if (count >= 1) {
       setCount(count - 1);
     }
@@ -114,6 +109,10 @@ const AddToCart = (props: dataStructure): JSX.Element => {
       <>
         {renderHandlerMessage()}
         <div className="addToCartGroup">
+          <button onClick={()=>{
+  dispatch(clearCart(items.cartItems.data))
+    dispatch(getCartItem());
+          }}>clear cart</button>
           <div
             className="addToCartButton"
             onClick={() => {
@@ -127,7 +126,7 @@ const AddToCart = (props: dataStructure): JSX.Element => {
           <div className="countGroup">
             <span
               onClick={() => {
-                decreaseHandler(props);
+                decreaseHandler();
               }}
               className="countButton"
             >
@@ -136,7 +135,7 @@ const AddToCart = (props: dataStructure): JSX.Element => {
             <span className="counter">{count}</span>
             <span
               onClick={() => {
-                increaseHandler(props);
+                increaseHandler();
               }}
               className="countButton"
             >

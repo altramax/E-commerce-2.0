@@ -76,7 +76,7 @@ export const clearCart = createAsyncThunk("deleteItems", async (data: any) => {
   //   return items;
 });
 
-const Cart = createSlice({
+const cart = createSlice({
   name: "Cart",
   initialState,
   reducers: {},
@@ -101,4 +101,4 @@ const Cart = createSlice({
     });
   },
 });
-export default Cart.reducer;
+export default cart.reducer;

@@ -25,25 +25,28 @@ const CartManager = (): JSX.Element => {
   const cart = useAppSelector((state) => state.cart);
 
   useEffect(() => {
-    calculateTotalPrice()
+    calculateTotalPrice();
   }, [cart.quantity]);
 
   // console.log(cart.quantity);
 
   const calculateTotalPrice = () => {
-    cart.cartItems !== "" && cart.cartItems.data &&
-      cart.cartItems.data.map((res: any) => {
-        if (res.price > 100 && res.price < 200) {
-          let w = res.quantity * (res.price - res.price * (15 / 100));
-          setArray((e) => [...e, w]);
-        } else if (res.price > 200) {
-          let w = res.quantity * (res.price - res.price * (20 / 100));
-          setArray((e) => [...e, w]);
-        } else if (res.price < 100) {
-          let w = res.quantity * (res.price - res.price * (10 / 100));
-          setArray((e) => [...e, w]);
-        }
-      });
+    let sumTotal =
+      cart.cartItems !== "" && cart.cartItems.data
+        ? cart.cartItems.data.map((res: any) => {
+            if (res.price > 100 && res.price < 200) {
+              let total = res.quantity * (res.price - res.price * (15 / 100));
+              return total;
+            } else if (res.price > 200) {
+              let total = res.quantity * (res.price - res.price * (20 / 100));
+              return total;
+            } else if (res.price < 100) {
+              let total = res.quantity * (res.price - res.price * (10 / 100));
+              return total;
+            }
+          })
+        : null;
+    setArray(sumTotal);
   };
 
   const checkoutHandler = () => {
@@ -57,7 +60,7 @@ const CartManager = (): JSX.Element => {
   return (
     <CartManagerStyle>
       <div className="CartGroup">
-        {cart.cartItems !== "" && cart.cartItems.data ? (
+        {cart.cartItems !== "" && cart.cartItems.data.length !== 0 ? (
           cart.cartItems.data.map((res: any) => {
             return (
               <div key={res.id} className="CartCard">
@@ -92,6 +95,7 @@ const CartManager = (): JSX.Element => {
                 $
                 {array
                   .reduce((a, b): number => {
+                    console.log(array);
                     return a + b;
                   }, 0)
                   .toFixed(2)}

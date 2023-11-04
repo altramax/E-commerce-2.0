@@ -6,43 +6,46 @@ import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
 import { deleteItem, getCartItem, updateItem } from "../../../Redux/CartSlice";
 
 type idType = {
-  id: number
-}
+  id: number;
+};
 
-
-export default function ProductQantity( {id}:idType) {
+export default function ProductQantity({ id }: idType) {
   const [count, setCount] = useState<number>(0);
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
+  const [item, setItem] = useState<any>("");
   const products = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
-  let item = products.cartItems.data.filter((res: any) => {
-    return res.id === id;
-  })[0];
-  // console.log(item.quantity);
-
-
   useEffect(() => {
-   setCount(item.quantity)
-  });
+    let product = products.cartItems.data.filter((res: any) => {
+      return res.id === id;
+    })[0];
+    setItem(product);
+    setCount(product.quantity);
+  }, [products.quantity]);
 
-  const quantityHandler = async(action: string) => {
+  const quantityHandler = async (action: string) => {
     if (action === "increase") {
       let count = item.quantity + 1;
-      let obj = {
+      let update = {
         id: id,
-        quantity: count
+        quantity: count,
+      };
+      console.log(update);
+      await dispatch(updateItem(update));
+      await dispatch(getCartItem());
+    } else if (action === "decrease") {
+      if (item.quantity > 0) {
+        let count = item.quantity - 1;
+
+        let update = {
+          id: id,
+          quantity: count,
+        };
+        console.log(update);
+        await dispatch(updateItem(update));
+        await dispatch(getCartItem());
       }
-      dispatch(updateItem(obj))
-      dispatch(getCartItem())
-    }else if (action === "decrease"){
-      let count = item.quantity - 1;
-      let obj = {
-        id: id,
-        quantity: count
-      }
-      dispatch(updateItem(obj))
-      dispatch(getCartItem())
     }
   };
 
@@ -86,16 +89,17 @@ export default function ProductQantity( {id}:idType) {
   //   window.location.reload();
   // };
 
-  const removeProduct = () => {
+  const removeProduct = async() => {
     // axios.delete(uri + id).catch((err) => console.log(err));
-    // setDepend(!depend);
+    setOpenConfirmation(!openConfirmation);
     // window.location.reload();
-    dispatch(deleteItem(id))
+    await dispatch(deleteItem(id));
+    await dispatch(getCartItem());
+
   };
 
   return (
     <Fragment>
-    
       <div className="quantityGroup">
         <div
           className="removeProduct"
@@ -109,7 +113,7 @@ export default function ProductQantity( {id}:idType) {
         <div className="CountGroup">
           <span
             onClick={() => {
-              quantityHandler("decrease")
+              quantityHandler("decrease");
             }}
             className="countButton"
           >
@@ -118,7 +122,7 @@ export default function ProductQantity( {id}:idType) {
           <span className="counter">{count}</span>
           <span
             onClick={() => {
-              quantityHandler("increase")
+              quantityHandler("increase");
             }}
             className="countButton"
           >
