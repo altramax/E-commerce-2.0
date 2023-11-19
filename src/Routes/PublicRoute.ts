@@ -45,7 +45,7 @@ const PublicRoutes = [
   {
     elements: [
         {
-         path: "/userprofile",
+         path: "/userprofile/*",
          component: UserProfileTemplate,
          }
         ],

@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useState } from "react";
-import axios from "axios";
 import { MdDeleteOutline } from "react-icons/md";
 import del from "../../assets/Icons/del.jpg";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
@@ -49,53 +48,10 @@ export default function ProductQantity({ id }: idType) {
     }
   };
 
-  // const increaseHandler = () => {
-  //   let g = count + 1;
-  //   axios
-  //     .patch(
-  //       uri + id,
-  //       {
-  //         quantity: g,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Accept: "application/json",
-  //         },
-  //       }
-  //     )
-  //     .catch((err) => console.log(err));
-  //   window.location.reload();
-  // };
-
-  // const decreaseHandler = () => {
-  //   if (count >= 1) {
-  //     let g = count - 1;
-  //     axios
-  //       .patch(
-  //         uri + id,
-  //         {
-  //           quantity: g,
-  //         },
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Accept: "application/json",
-  //           },
-  //         }
-  //       )
-  //       .catch((err) => console.log(err));
-  //   }
-  //   window.location.reload();
-  // };
-
   const removeProduct = async() => {
-    // axios.delete(uri + id).catch((err) => console.log(err));
     setOpenConfirmation(!openConfirmation);
-    // window.location.reload();
     await dispatch(deleteItem(id));
     await dispatch(getCartItem());
-
   };
 
   return (

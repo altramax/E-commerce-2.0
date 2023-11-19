@@ -12,6 +12,14 @@ const routes = [
       },
     ],
   },
+  // {
+  //   elements: [
+  //     {
+  //       path: "/",
+  //       component: UserInformation,
+  //     },
+  //   ],
+  // },  
 ];
 
 export default routes;

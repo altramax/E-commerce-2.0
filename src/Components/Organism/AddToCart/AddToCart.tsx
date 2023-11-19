@@ -9,7 +9,6 @@ import {
   getCartItem,
   updateItem,
 } from "../../../Redux/CartSlice";
-import { successful } from "../../../Redux/AlertSlice";
 
 export interface dataStructure {
   title: string;

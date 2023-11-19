@@ -53,7 +53,7 @@ const SignInModal = ({signUp}:signinType): JSX.Element => {
           <img onClick={() => navigate(-1)} src={cancle} alt="" />
         </div>
         <div className="signin__header">
-          <h3>ONESTORE</h3>
+          <h3>Welcome Back</h3>
         </div>
         <div className="signin__body">
           <div className="signin__inputs">

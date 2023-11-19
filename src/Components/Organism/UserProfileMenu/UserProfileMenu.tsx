@@ -4,10 +4,17 @@ import { Link } from "react-router-dom";
 const UserProfileMenu = () => {
   return (
     <UserProfileMenuStyle>
-      <div>SideBar</div>
-      <Link to="/userprofile">
-        <p> User Information</p>
-      </Link>
+      <div className="menu__links">
+        <Link to="/userprofile">
+          <p> User Information</p>
+        </Link>
+        <p>Orders</p>
+        <p>Past Activities</p>
+        <p>Contact Us</p>
+      </div>
+      <div>
+        <p>ONESTORE</p>
+      </div>
     </UserProfileMenuStyle>
   );
 };

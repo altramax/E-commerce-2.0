@@ -30,7 +30,7 @@ const NavbarStyle = styled.div`
     color: #000;
     position: fixed;
     top: 0;
-    width: 95%;
+    width: 100%;
     background-color: #fff;
 
     .Logo {
@@ -204,11 +204,10 @@ const NavbarStyle = styled.div`
       .cart__hamburger {
         width: fit-content;
         justify-content: center;
-        margin-right: 1.5rem;
       }
 
       .cartNotificationIcon {
-        right: 3rem;
+        right: 1.5rem;
       }
 
       #linkGroup {

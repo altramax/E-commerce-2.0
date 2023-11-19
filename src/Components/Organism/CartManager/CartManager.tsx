@@ -54,7 +54,7 @@ const CartManager = (): JSX.Element => {
   };
   const clearHandler = () => {
     setDisplay(false);
-  };
+  };  
 
   console.log(cart.cartItems);
   return (

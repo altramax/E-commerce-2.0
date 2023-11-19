@@ -5,12 +5,14 @@ import PrivateRouthPath from "../../../Routes/PrivateRoutePath";
 const UserProfile = (): JSX.Element => {
   return (
     <UserProfileStyle>
-      <h1>UserProfile</h1>
       <div className="user__profile__body">
         <div className="user__profile__menu">
           <UserProfileMenu />
+          
         </div>
-        <PrivateRouthPath />
+        <div className="user__profile__content">
+          <PrivateRouthPath />
+        </div>
       </div>
     </UserProfileStyle>
   );
