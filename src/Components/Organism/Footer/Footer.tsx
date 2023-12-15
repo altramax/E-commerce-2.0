@@ -7,6 +7,7 @@ import visa from "../../assets/Icons/visa.svg";
 import paypal from "../../assets/Icons/paypal.svg";
 
 const Footer = (): JSX.Element => {
+  
   return (
     <FooterStyle>
       <div className="FooterContainer">
@@ -22,7 +23,7 @@ const Footer = (): JSX.Element => {
             <li>
               <img src={twitter} alt="" />
             </li>
-          </ul>
+          </ul> 
         </div>
         <div>
           <h3>COMPANTY</h3>

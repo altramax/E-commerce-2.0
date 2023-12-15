@@ -10,7 +10,7 @@ const initialState: productsType = {
 };
 
 export const getProducts = createAsyncThunk("products", async () => {
-    const products = await axios.get("http://localhost:9000/products");
+    const products = await axios.get("https://fakestoreapi.com/products");
     return products;
 });
 

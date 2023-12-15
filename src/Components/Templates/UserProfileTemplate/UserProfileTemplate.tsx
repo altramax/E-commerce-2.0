@@ -1,5 +1,5 @@
 import UserProfileTemplateStyle from "./UserProfileTemplateStyle";
-import UserProfile from "../../Organism/UserProfile/UserProfile";
+import UserProfile from "../../Organism/UserProfilePage/UserProfilePage";
 import PrivateRoute from "../../../Config/PrivateRoute";
 import SignInModal from "../../Organism/SignInModal/SignInModal";
 import SignUpModal from "../../Organism/SignUpModal/SignUpModal";
@@ -27,7 +27,7 @@ const UserProfileTemplate = (): JSX.Element => {
         <PrivateRoute>
           <UserProfile />
         </PrivateRoute>
-      </>
+      </> 
     </UserProfileTemplateStyle>
   );
 };

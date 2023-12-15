@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import PublicRouteTemplate from "./Components/Templates/PublicRouteTemplate/PublicRouteTemplate";
 import Cart from "./Components/Templates/CartTemplate/Cart";
 import PrivateRoute from "./Config/PrivateRoute";
-// import HomePageTemplate from "./Components/Templates/HomePage/HomePageTemplate";
 
 function App() {
   return (

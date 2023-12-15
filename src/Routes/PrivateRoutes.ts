@@ -1,25 +1,34 @@
-import UserInformation from "../Components/Organism/UserInformation/UserInformation";
-import Cart from "../Components/Templates/CartTemplate/Cart";
-import HomePageTemplate from "../Components/Templates/HomePageTemplate/HomePageTemplate";
-
+import AccountInformation from "../Components/Organism/AccountInformation/AccountInformation";
+// import Cart from "../Components/Templates/CartTemplate/Cart";
+// import HomePageTemplate from "../Components/Templates/HomePageTemplate/HomePageTemplate";
+import Orders from "../Components/Organism/Orders/Orders";
+import ContactUs from "../Components/Organism/Contactus/ContactUs";
 
 const routes = [
   {
     elements: [
       {
         path: "/",
-        component: UserInformation,
+        component: AccountInformation,
       },
     ],
   },
-  // {
-  //   elements: [
-  //     {
-  //       path: "/",
-  //       component: UserInformation,
-  //     },
-  //   ],
-  // },  
+  {
+    elements: [
+      {
+        path: "/orders",
+        component: Orders,
+      },
+    ],
+  },
+  {
+    elements: [
+      {
+        path: "/contactus",
+        component: ContactUs,
+      },
+    ],
+  },
 ];
 
 export default routes;

@@ -12,8 +12,11 @@ padding: 94px 30px 30px 30px;
 
   .menu__links {
   
-    p{
-        margin-bottom: 30px;
+   .link{
+        display: block;
+        margin-bottom: 20px;
+        color: #000;
+        text-decoration: none;
     }
    
   }

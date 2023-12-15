@@ -5,10 +5,9 @@ const UserProfileMenu = () => {
   return (
     <UserProfileMenuStyle>
       <div className="menu__links">
-        <Link to="/userprofile">
-          <p> User Information</p>
-        </Link>
-        <p>Orders</p>
+        <Link to="/userprofile" className="link">Account Information</Link>
+        <Link to="/userprofile/orders" className="link">Orders</Link>
+        <Link to="/userprofile/contactus" className="link">Contact US</Link>
         <p>Past Activities</p>
         <p>Contact Us</p>
       </div>

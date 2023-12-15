@@ -1,7 +1,7 @@
 import AddToCartStyle from "./AddToCartStyle";
 import { useState, useEffect } from "react";
 import { GiShoppingCart } from "react-icons/gi";
-import axios from "axios";
+// import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
 import {
   addToCart,
@@ -108,10 +108,10 @@ const AddToCart = (props: dataStructure): JSX.Element => {
       <>
         {renderHandlerMessage()}
         <div className="addToCartGroup">
-          <button onClick={()=>{
+          {/* <button onClick={()=>{
   dispatch(clearCart(items.cartItems.data))
     dispatch(getCartItem());
-          }}>clear cart</button>
+          }}>clear cart</button> */}
           <div
             className="addToCartButton"
             onClick={() => {

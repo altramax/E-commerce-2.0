@@ -7,6 +7,7 @@ const MensWearTemplate = () => {
     <div>
       <DiscountHeader />
       <FilteredProducts filter="men's" />
+      <img src="https://drive.google.com/uc?id=1-49KqLzb3DjjOFrhGSO75rbf1JN_T6vv" alt="broken" />
       <Footer />
     </div>
   );
