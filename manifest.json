@@ -3,28 +3,28 @@
     "short_name": "ONS",
     "icons": [
       {
-        "src": "/maskable_icon.png",
+        "src": "https://images.unsplash.com/photo-1623230590824-f39e31a0a608?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kaWFuJTIwYm95fGVufDB8fDB8fHww",
         "sizes": "200x200",
         "type": "image/png",
         "purpose": "any maskable"
       },
       {
-        "src": "/android-chrome-192x192.png",
+        "src": "https://images.unsplash.com/photo-1623230590824-f39e31a0a608?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kaWFuJTIwYm95fGVufDB8fDB8fHww",
         "sizes": "192x192",
         "type": "image/png"
       },
       {
-        "src": "/android-chrome-512x512.png",
+        "src": "https://images.unsplash.com/photo-1623230590824-f39e31a0a608?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kaWFuJTIwYm95fGVufDB8fDB8fHww",
         "sizes": "512x512",
         "type": "image/png"
       },
       {
-        "src": "/android-chrome-256x256.png",
+        "src": "https://images.unsplash.com/photo-1623230590824-f39e31a0a608?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kaWFuJTIwYm95fGVufDB8fDB8fHww",
         "sizes": "256x256",
         "type": "image/png"
       },
       {
-        "src": "/android-chrome-384x384.png",
+        "src": "https://images.unsplash.com/photo-1623230590824-f39e31a0a608?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kaWFuJTIwYm95fGVufDB8fDB8fHww",
         "sizes": "384x384",
         "type": "image/png"
       }

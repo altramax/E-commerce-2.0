@@ -1,7 +1,7 @@
-const CACHE_NAME = 'my-app-cache-v1';
+const CACHE_NAME = 'one store';
 const urlsToCache = [
   '/',
-  '/index.html',
+  './index.html',
   // Add other assets and paths you want to cache
 ];
 
