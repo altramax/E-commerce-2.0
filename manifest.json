@@ -33,6 +33,6 @@
     "background_color": "#eab308",
     "display": "standalone",
     "scope": "/",
-    "start_url": "https://onestoreapp.netlify.app/"
+    "start_url": "https:///main--onestoreapp.netlify.app/"
   }
   
