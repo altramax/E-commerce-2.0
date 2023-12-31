@@ -8,7 +8,12 @@ import AccessoriesTemplate from "../Components/Templates/AccessoriesTemplate/Acc
 
 const PublicRoutes = [
   {
-    elements: [{ path: "/", component: HomePageTemplate }],
+    elements: [
+      {
+        path: "/",
+        component: HomePageTemplate,
+      },
+    ],
   },
   {
     elements: [
@@ -44,19 +49,19 @@ const PublicRoutes = [
   },
   {
     elements: [
-        {
-         path: "/userprofile/*",
-         component: UserProfileTemplate,
-         }
-        ],
+      {
+        path: "/userprofile/*",
+        component: UserProfileTemplate,
+      },
+    ],
   },
   {
     elements: [
-        {
-         path: "/accessories",
-         component: AccessoriesTemplate,
-         }
-        ],
+      {
+        path: "/accessories",
+        component: AccessoriesTemplate,
+      },
+    ],
   },
 ];
 
