@@ -8,7 +8,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
-    .register("../ServiceWorker.ts")
+    .register("/ServiceWorker.ts")
     .then((registration) => {
       console.log("Service Worker registered with scope:", registration.scope);
     })
