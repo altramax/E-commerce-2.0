@@ -8,7 +8,7 @@ import Rating from "../../Molecules/Rating/Rating.js";
 import Discount from "../Prices/Discount";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks.js";
 import { getProducts } from "../../../Redux/AllProductsSlice.js";
-
+import testImage from "../../assets/Images/men.jpg";
 
 type propsType = {
   filter: string;
@@ -26,8 +26,7 @@ type dataStructure = {
 };
 
 const FilteredProducts = (props: propsType): JSX.Element => {
-
-const [display, setDisplay] = useState<JSX.Element | null>();
+  const [display, setDisplay] = useState<JSX.Element | null>();
   const data = useAppSelector((state) => state.products.products);
   const dispatch = useAppDispatch();
 
@@ -42,7 +41,7 @@ const [display, setDisplay] = useState<JSX.Element | null>();
   const modalHandler = (info: dataStructure) => {
     {
       data &&
-        data.map((sub:any) => {
+        data.map((sub: any) => {
           if (sub.id === info.id) {
             {
               sub.modal = (
@@ -66,40 +65,50 @@ const [display, setDisplay] = useState<JSX.Element | null>();
 
   return (
     <AllProductsStyle>
-      <div className="CardGroup">
+      <div className="card__group">
         {display}
-        {data ? (
-          data.map((res: any) => {
-            let [w, p] = res.category.split(" ");
-            if (w === props.filter) {
-              return (
-                <div className="CardContainer" key={res.id}>
-                  <div
-                    onClick={() => {
-                      modalHandler(res);
-                    }}
-                  >
-                    <Discount value={res.price} />
-                    <img src={res.image} alt="Product Image" className="img" />
-                    <h2>{res.title.slice(0, 36)}</h2>
-                    <h3>${res.price}</h3>
+        {data
+          ? data.map((res: any) => {
+              let [w, p] = res.category.split(" ");
+              if (w === props.filter) {
+                return (
+                  <div className="card__container" key={res.id}>
+                    <div
+                      className="card__container__sub"
+                      onClick={() => {
+                        modalHandler(res);
+                      }}
+                    >
+                      <Discount value={res.price} />
+                      <div className="card__image__container">
+                        <img
+                          src={res.image}
+                          alt="Product Image"
+                          className="main__image"
+                        />
+                        <img
+                          src={testImage}
+                          alt="test"
+                          className="hover__image"
+                        />
+                      </div>
+                      <h2>{res.title.slice(0, 25)}</h2>
+                      <h3>${res.price}</h3>
+                    </div>
+                    <AddToCart
+                      title={res.title}
+                      category={res.category}
+                      description={res.description}
+                      image={res.image}
+                      price={res.price}
+                      rating={res.rating}
+                      id={res.id}
+                    />
                   </div>
-                  <AddToCart
-                    title={res.title}
-                    category={res.category}
-                    description={res.description}
-                    image={res.image}
-                    price={res.price}
-                    rating={res.rating}
-                    id={res.id}
-                  />
-                </div>
-              );
-            }
-          })
-        ) : (
-          <LazyLoading />
-        )}
+                );
+              }
+            })
+          : null}
       </div>
     </AllProductsStyle>
   );

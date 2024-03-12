@@ -61,76 +61,46 @@ const AllProducts = (): JSX.Element => {
       <>
         {renderModal()}
         <div className="card__group">
-          {data && data.products ? (
-            data.products.map((res: any, i: number) => {
-              return (
-                <div
-                  className="card__container"
-                  key={res.id}
-                  onClick={() => setSelectedItem(res.id)}
-                >
-                  <div className="card__container__sub" onClick={openModal}>
-                    {/* <Discount value={res.price} /> */}
+          {data && data.products
+            ? data.products.map((res: any, i: number) => {
+                return (
+                  <div
+                    className="card__container"
+                    key={res.id}
+                    onClick={() => setSelectedItem(res.id)}
+                  >
+                    <div className="card__container__sub" onClick={openModal}>
+                      <Discount value={res.price} />
 
-                    <div className="card__image__container">
-                      <img
-                        src={res.image}
-                        alt="Product Image"
-                        className="main__image"
-                      />
-                      <img
-                        src={testImage}
-                        alt="test"
-                        className="hover__image"
-                      />
+                      <div className="card__image__container">
+                        <img
+                          src={res.image}
+                          alt="Product Image"
+                          className="main__image"
+                        />
+                        <img
+                          src={testImage}
+                          alt="test"
+                          className="hover__image"
+                        />
+                      </div>
+                      <h2>{res.title.slice(0, 25)}</h2>
+                      <h3>${res.price}</h3>
                     </div>
-                    <h2>{res.title.slice(0, 25)}</h2>
-                    <h3>${res.price}</h3>
+
+                    <AddToCart
+                      title={res.title}
+                      category={res.category}
+                      description={res.description}
+                      image={res.image}
+                      price={res.price}
+                      rating={res.rating}
+                      id={res.id}
+                    />
                   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  <AddToCart
-                    title={res.title}
-                    category={res.category}
-                    description={res.description}
-                    image={res.image}
-                    price={res.price}
-                    rating={res.rating}
-                    id={res.id}
-                  />
-                </div>
-              );
-            })
-          ) : null}
+                );
+              })
+            : null}
         </div>
       </>
     </AllProductsStyle>

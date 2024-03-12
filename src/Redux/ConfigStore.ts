@@ -1,20 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
-import { applyMiddleware } from "@reduxjs/toolkit";
-import thunk from "redux-thunk"
+// import { applyMiddleware } from "@reduxjs/toolkit";
+// import thunk from "redux-thunk"
 import rootReducer from "./RootReducer";
 
 import {
   persistStore,
   persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
+  // FLUSH,
+  // REHYDRATE,
+  // PAUSE,
+  // PERSIST,
+  // PURGE,
+  // REGISTER,
 } from "redux-persist";
-import { UserAuthSlice } from "./AuthSlice";
+// import { UserAuthSlice } from "./AuthSlice";
 
 const persistConfig = {
   key: "root",

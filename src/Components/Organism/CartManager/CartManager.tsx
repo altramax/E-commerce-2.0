@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import CartManagerStyle from "./CartManagerStyle";
 import Discount from "../Prices/Discount";
 import NewPrice from "../Prices/NewPrice";
 import ProductQantity from "../../Molecules/ProductQuantity/ProductQuantity";
 import empty from "../../assets/Icons/empty.jpg";
 import Checkout from "../Checkout/Checkout";
-import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
+import { useAppSelector } from "../../../Redux/Hooks";
 
 type getStructure = {
   id: number;
@@ -27,8 +26,6 @@ const CartManager = (): JSX.Element => {
   useEffect(() => {
     calculateTotalPrice();
   }, [cart.quantity]);
-
-  // console.log(cart.quantity);
 
   const calculateTotalPrice = () => {
     let sumTotal =
@@ -56,7 +53,6 @@ const CartManager = (): JSX.Element => {
     setDisplay(false);
   };  
 
-  console.log(cart.cartItems);
   return (
     <CartManagerStyle>
       <div className="CartGroup">
