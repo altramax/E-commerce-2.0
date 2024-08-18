@@ -1,101 +1,156 @@
 import HomeManagerStyle from "./HomeMangerStyle";
-import { Link } from "react-router-dom";
-import adidas from "../../assets/Icons/adidas.jpg";
-import chanel from "../../assets/Icons/chanel.svg";
-import shipping from "../../assets/Icons/shipping.png";
-import update from "../../assets/Icons/update.png";
-import mask from "../../assets/Icons/mask.png";
-import refund from "../../assets/Icons/refund.png";
-import samsung from "../../assets/Icons/samsung.png";
-import cartier from "../../assets/Icons/cartier.svg";
+import { useNavigate } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
-import men from "../../assets/Images/men.jpg";
-import women from "../../assets/Images/women.jpg";
-import market from "../../assets/Images/market.jpg";
-import sale from "../../assets/Icons/sale.jpg";
+import CategoryGroup from "../CategoryGroup/CategoryGroup";
+import AllProducts from "../ProductsContainer/AllProductsContainer";
+import Header from "../Header/Header";
 
 const HomeManager = (): JSX.Element => {
+  const navigate = useNavigate();
+
+  const handleNavigation = (route: string) => {
+    navigate(`/category?id=${route}`);
+  };
+
   return (
     <HomeManagerStyle>
-      <header className="headerContainer">
-        <h2 className="headerText">Everyone's Collections And Style</h2>
-      </header>
+      <Header />
+
+      <section className="categoryContainer">
+        <CategoryGroup />
+      </section>
+
+      <section className="allProducts__container">
+        <h3>Bestsellers</h3>
+        <AllProducts category="allProducts" />
+      </section>
+
       <section className="brandsContainer">
         <h3>Brands</h3>
         <div className="brandsGroup">
-          <img src={adidas} alt="" className="brands" />
-          <img src={chanel} alt="" className="brands" />
-          <img src={cartier} alt="" className="brands" />
-          <img src={samsung} alt="" className="brands" />
+          <img
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813147/gucci_rif0l2.jpg"
+            alt=""
+            className="brands"
+          />
+          <img
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813134/chanel_k4z1w2.svg"
+            alt=""
+            className="brands"
+          />
+          <img
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813132/cartier_vvcy7r.svg"
+            alt=""
+            className="brands"
+          />
+          <img
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723854255/rolex_ctbkih.svg"
+            alt=""
+            className="brands"
+          />
+          <img
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723854254/fendi_jhmyvu.svg"
+            alt=""
+            className="brands"
+          />
+          <img
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813127/adidas_ufshsr.jpg"
+            alt=""
+            className="brands"
+          />
         </div>
       </section>
-      <section className="benefits">
-        <h2>Benefits of choosing our services</h2>
-        <div>
-          <p>We ensure our customers have the best shopping experience</p>
-          <p>
-            We provide free shipping anywhere as long as you spend more than $50
-          </p>
+
+      <section className="discountGroup">
+        <h2>Featured Collections</h2>
+
+        <div className="img__group__main">
+          <div className="img__group__sub">
+            <div className="img__group">
+              <img
+                src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723932260/download_1_oticgx.jpg"
+                alt="discount"
+                id="large"
+              />
+              <div
+                onClick={() => handleNavigation("Men")}
+                className="shopButton"
+              >
+                <span>Discounts</span>
+                <BsArrowRight />
+              </div>
+            </div>
+          </div>
+
+          <div className="img__group__sub">
+            <div className="img__group">
+              <img
+                src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723933416/Fragrance_Spray_lh4tgu.jpg"
+                alt="discount"
+                id="smaller"
+              />
+              <div
+                onClick={() => handleNavigation("Men")}
+                className="shopButton"
+              >
+                <span>Discounts</span>
+                <BsArrowRight />
+              </div>
+            </div>
+            <div className="img__group">
+              <img
+                src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723931682/top-view-assortment-different-traveling-elements_o7cjjg.jpg"
+                alt="discount"
+                id="smaller"
+              />
+              <div
+                onClick={() => handleNavigation("Men")}
+                className="shopButton"
+              >
+                <span>Discounts</span>
+                <BsArrowRight />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
       <section className="offersGroups">
         <div className="offers">
-          <img src={refund} alt="" className="offersImg" />
+          <img
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813162/refund_wprbrb.png"
+            alt=""
+            className="offersImg"
+          />
           <h3>Original Products</h3>
           <p>Money back guarantee if the products are not original</p>
         </div>
         <div className="offers">
-          <img src={mask} alt="" className="offersImg" />
+          <img
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813154/mask_ozynfj.png"
+            alt=""
+            className="offersImg"
+          />
           <h3>Satisfaction Guarantee</h3>
           <p>Exchange products that don't suit your needs</p>
         </div>
         <div className="offers">
-          <img src={update} alt="" className="offersImg" />
+          <img
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813170/update_b4vrwq.png"
+            alt=""
+            className="offersImg"
+          />
           <h3>New Arrivals Everyday</h3>
           <p>We update our collections almost Everyday</p>
         </div>
         <div className="offers">
-          <img src={shipping} alt="" className="offersImg" />
+          <img
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813166/shipping_yfeq30.png"
+            alt=""
+            className="offersImg"
+          />
           <h3>Fast & Free Shipping</h3>
           <p>We offer fast and free shipping for our customers</p>
-        </div>
-      </section>
-      <section className="shopGroup">
-        <h2>Shops</h2>
-        <div className="shops">
-          <div className="shopType">
-            <img src={men} alt="" className="shopImg" />
-            <Link to="/mensWear" className="shopButton">
-              <span>Shop for Men</span>
-              <BsArrowRight />
-            </Link>
-          </div>
-          <div className="shopType">
-            <img src={women} alt="" className="shopImg" />
-            <Link to="/womenWear" className="shopButton">
-              <span>Shop for Women</span>
-              <BsArrowRight />
-            </Link>
-          </div>
-          <div className="shopType">
-            <img src={market} alt="" className="shopImg" />
-            <Link to="/marketPlace" className="shopButton">
-              <span>Super Store</span>
-              <BsArrowRight />
-            </Link>
-          </div>
-        </div>
-      </section>
-      <section className="discountFooter">
-        <div className="textGroup">
-          <h3>LIMITED OFFER</h3>
-          <h2>
-            Get <span>50% off</span> only this Friday on all our products
-          </h2>
-        </div>
-        <div className="imgGroup">
-          <div className="point"></div>
-          <img src={sale} alt="" className="" />
         </div>
       </section>
     </HomeManagerStyle>

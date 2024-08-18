@@ -8,7 +8,7 @@ import { useAppSelector } from "../../../Redux/Hooks"
 
 const UserProfileTemplate = (): JSX.Element => {
   const [authModal, setAuthModal] = useState<string>("signin");
-  const user = useAppSelector(state=>state.user.userId)
+  const user = useAppSelector(state=>state.user.user)
 
  const openSignupModal = ()=>{
     setAuthModal("signup")
@@ -21,8 +21,8 @@ const UserProfileTemplate = (): JSX.Element => {
   return (
     <UserProfileTemplateStyle>
       <>
-        {authModal === "signin" && user === "" ? <SignInModal signUp={openSignupModal}/> : null}
-        {authModal === "signup" && user === "" ? <SignUpModal signIn={openSigninModal}/> : null}
+        {authModal === "signin" && user === null ? <SignInModal signUp={openSignupModal}/> : null}
+        {authModal === "signup" && user === null ? <SignUpModal signIn={openSigninModal}/> : null}
 
         <PrivateRoute>
           <UserProfile />

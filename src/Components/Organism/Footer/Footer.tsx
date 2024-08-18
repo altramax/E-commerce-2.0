@@ -18,6 +18,7 @@ const Footer = (): JSX.Element => {
               <img src={facebook} alt="" />
             </li>
             <li>
+              
               <img src={instagram} alt="" />
             </li>
             <li>

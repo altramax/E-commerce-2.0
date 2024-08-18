@@ -1,6 +1,6 @@
 const sizes = {
     tablet: '768px',
-    smallLaptop: "1200px",
+    smallLaptop: "1080px",
     laptop: '1280px',
   };
 

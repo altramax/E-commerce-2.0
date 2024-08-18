@@ -2,141 +2,95 @@ import NavbarStyle from "./NavbarTemplateStyle";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import cartIcon from "../../assets/Icons/cart.png";
-import { MdClear } from "react-icons/md";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { IoMdPower } from "react-icons/io";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
 import { useNavigate } from "react-router-dom";
-import { logOut, resetErrorMessage } from "../../../Redux/AuthSlice";
-import { otherErrors } from "../../../Redux/AlertSlice";
+import { logOut } from "../../../Redux/AuthSlice";
+import { CgProfile } from "react-icons/cg";
+import { IoIosSearch } from "react-icons/io";
+import { db } from "../../../Config/Config";
+import { doc, onSnapshot } from "firebase/firestore";
+import { localClearCart, updateProductsData } from "../../../Redux/CartSlice";
 
 const Navbar = (): JSX.Element => {
   const [menuIcon, setMenuIcon] = useState<boolean>(false);
-  // const [notification, setNotification] = useState<number | null>(null);
-  const [profileLinks, setProfileLinks] = useState<boolean>(false);
-  const [successResponse, setSuccessResponse] = useState<boolean>(false);
-  const [errorResponse, setErrorResponse] = useState<boolean>(false);
-  const userId = useAppSelector((state) => state.user.userId);
+
+  const [response, setResponse] = useState<boolean>(false);
+  const user = useAppSelector((state) => state.user.user);
   const alert = useAppSelector((state) => state.alert);
   const errorMessage = useAppSelector((state) => state.user);
-  const cart = useAppSelector(state=>state.cart)
+  const cart = useAppSelector((state) => state.cart.products);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    handleNetWorkChange();
-  }, [alert.message, errorMessage.message, cart.cartCount]);
 
-  const dropdownHandler = () => {
-    setMenuIcon(!menuIcon);
-  };
+    if (user?.uid) {
+      const docRef = doc(db, "Cart", user?.uid);
+      onSnapshot(docRef, (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          let currentItemsArray = docSnapshot.exists()
+            ? docSnapshot?.data()?.items
+            : [];
+          // console.log("enter snap shot navbar");
+          // console.log(currentItemsArray);
+          currentItemsArray && dispatch(updateProductsData(currentItemsArray));
+          setResponse(currentItemsArray);
+        } else {
+          console.log("notfound");
+        }
+      });
+    }
+  }, [user?.uid]);
 
-  const profileMenuHandler = () => {
-    setProfileLinks(!profileLinks);
+
+
+  const goToProfile = () => {
+    navigate("/userprofile");
   };
 
   const logoutUser = () => {
     dispatch(logOut());
-    navigate(-1);
-  };
-
-  const d = () => {
-    if (alert.message !== "") {
-      setSuccessResponse(true);
-    }
-  };
-
-  const handleNetWorkChange = () => {
-    if (alert.message !== "") {
-      setSuccessResponse(true);
-      setTimeout(() => {
-        setSuccessResponse(false);
-        dispatch(otherErrors(""));
-      }, 3000);
-    } else if (errorMessage.message !== "") {
-      setErrorResponse(true);
-      setTimeout(() => {
-        setErrorResponse(false);
-        dispatch(resetErrorMessage());
-      }, 3000);
-    }
+    navigate("/");
+    dispatch(localClearCart());
   };
 
   return (
     <NavbarStyle>
       <>
         <div className="NavContainer">
-          {successResponse && (
-            <div className="network__response">{alert.message}</div>
-          )}
-          {errorResponse && (
-            <div className="network__response">{errorMessage.message}</div>
-          )}
           <Link to="/" className="Logo">
             OneStore
           </Link>
 
-          <div id="linkGroup" className={menuIcon ? "linkgroup" : "hidden"}>
-            <Link to="/menswear" className="Link">
-              Men
-            </Link>
-            <Link to="/womenwear" className="Link">
-              Women
-            </Link>
-            <Link to="/womenwear" className="Link">
-              Accessories
-            </Link>
-            <Link to="/marketplace" className="Link">
-              Store
-            </Link>
-          </div>
-
-          <div
-            className={menuIcon ? "overlay" : "hidden"}
-            onClick={dropdownHandler}
-          ></div>
-          <div
-            className={profileLinks ? "overlay" : "hidden"}
-            onClick={profileMenuHandler}
-          ></div>
-
-          <div className="cart__hamburger">
-            <div className="user__profile__group" onClick={profileMenuHandler}>
-              <div className="user__profile__group__title">
-                <div className="profile__icon"></div>
-                {userId !== "" ? <p>Hi Ezekiel</p> : null}
-              </div>
-              {/* {!profileLinks ? <p className="hover">Profile</p> : null} */}
-              <div
-                className={`profile__links  ${
-                  profileLinks ? "Open" : "hidden"
-                }  `}
-              >
-                <Link to="/userprofile" className="user__profile">
-                  My Account
-                </Link>
-                {userId !== "" ? (
-                  <div className="profile__link__sub">
-                    <Link to="#" className="user__profile">
-                      Saved Item
-                    </Link>
-                    <Link to="#" className="user__profile">
-                      My Orders
-                    </Link>
-                    <button onClick={logoutUser}>Logout</button>
-                  </div>
-                ) : null}
+          <div className="searchGroup">
+            <div className="wrapper">
+              <input type="text" />
+              <div>
+                <IoIosSearch size="25" />
               </div>
             </div>
-            <div className="hamburger" onClick={dropdownHandler}>
-              {!menuIcon ? (
-                <GiHamburgerMenu size={30} />
-              ) : (
-                <MdClear size={30} />
+          </div>
+
+          <div className="group">
+            <div className="profile_name_icon">
+              {user === null && (
+                <CgProfile size="30" onClick={goToProfile} className="center" />
+              )}
+              {user !== null && (
+                <div className="center">
+                  <p>Hi Ezekiel</p>
+                  <div>
+                    <IoMdPower size="30" onClick={logoutUser} />
+                  </div>
+                </div>
               )}
             </div>
 
             <Link to="/cart" className="Link">
-              <p className="cartNotificationIcon">{cart.cartCount}</p>
+              <p className="cartNotificationIcon">
+                {cart !== null ? cart?.length : 0}
+              </p>
               <img src={cartIcon} alt="Cart" className="cart" />
             </Link>
           </div>

@@ -1,16 +1,13 @@
-import {memo} from "react";
-import { RootState } from "../Redux/RootReducer"
-import { useAppSelector } from "../Redux/Hooks"
-import { Navigate } from "react-router-dom"
+import { memo } from "react";
+import { RootState } from "../Redux/RootReducer";
+import { useAppSelector } from "../Redux/Hooks";
 
-type privatetype = {children: JSX.Element}
+type privatetype = { children: JSX.Element };
 
- const PrivateRoute = ({children}:privatetype) => {
-    const state = useAppSelector((state: RootState)=> state.user)
-    console.log(state);
-    const auth = state.userId
-    console.log(auth);
-   return auth !== "" ? children : null;
-}
+const PrivateRoute = ({ children }: privatetype) => {
+  const auth = useAppSelector((state: RootState) => state.user.user);
+
+  return auth !== null ? children : null;
+};
 
 export default memo(PrivateRoute);

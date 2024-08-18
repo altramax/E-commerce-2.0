@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import CartManagerStyle from "./CartManagerStyle";
-import Discount from "../Prices/Discount";
 import NewPrice from "../Prices/NewPrice";
 import ProductQantity from "../../Molecules/ProductQuantity/ProductQuantity";
-import empty from "../../assets/Icons/empty.jpg";
 import Checkout from "../Checkout/Checkout";
 import { useAppSelector } from "../../../Redux/Hooks";
+import CartItemCounter from "../CartItemCounter/CartItemCounter";
+import { useNavigate } from "react-router-dom";
+import CartCard from "../../Molecules/CartCard/CartCard";
+import EmptyState from "../../Molecules/EmptyState/EmptyState";
 
-type getStructure = {
+export interface getStructure {
   id: number;
   name: string;
   img: string;
@@ -19,90 +21,95 @@ type getStructure = {
 };
 
 const CartManager = (): JSX.Element => {
-  const [array, setArray] = useState<number[]>([]);
-  const [display, setDisplay] = useState<boolean>(false);
-  const cart = useAppSelector((state) => state.cart);
+  // const [display, setDisplay] = useState<boolean>(false);
+  const cartItems = useAppSelector((state) => state.cart.products);
+  const navigate = useNavigate()
 
   useEffect(() => {
-    calculateTotalPrice();
-  }, [cart.quantity]);
-
-  const calculateTotalPrice = () => {
-    let sumTotal =
-      cart.cartItems !== "" && cart.cartItems.data
-        ? cart.cartItems.data.map((res: any) => {
-            if (res.price > 100 && res.price < 200) {
-              let total = res.quantity * (res.price - res.price * (15 / 100));
-              return total;
-            } else if (res.price > 200) {
-              let total = res.quantity * (res.price - res.price * (20 / 100));
-              return total;
-            } else if (res.price < 100) {
-              let total = res.quantity * (res.price - res.price * (10 / 100));
-              return total;
-            }
-          })
-        : null;
-    setArray(sumTotal);
-  };
+    subtotalHandler();  
+  }, [cartItems]);
 
   const checkoutHandler = () => {
-    setDisplay(true);
+    // setDisplay(true);
+   navigate("/checkout")
   };
-  const clearHandler = () => {
-    setDisplay(false);
-  };  
+  
+  // const clearHandler = () => {
+  //   setDisplay(false);
+  // };
+
+  const productImageHandler = (images: any) => {
+    let img = images?.find((image: any) => {
+      if (image.url !== "") {
+        return image.url;
+      }
+    })?.url;
+    return img !== undefined ? img : "";
+  };
+
+  const subtotalHandler = () => {
+    let priceArray =   cartItems
+      ?.map((item: any) => {
+        const cost = Number(item?.price) * Number(item?.orderedQuantity);
+        const dis = item?.discount !== 0 ? Number(item?.discount) : "";
+        return dis !== ""&& cost !== 0 ? cost - dis : cost;
+      })
+      .reduce((a: number, b: number) => {
+        return a + b;
+      }, 0);
+       
+    return priceArray ? <h4>₦{priceArray.toLocaleString()}</h4> : <h4>0</h4>;
+  };
+
+  
+console.log(cartItems);
+
 
   return (
     <CartManagerStyle>
-      <div className="CartGroup">
-        {cart.cartItems !== "" && cart.cartItems.data.length !== 0 ? (
-          cart.cartItems.data.map((res: any) => {
-            return (
-              <div key={res.id} className="CartCard">
-                <div className="cartCardFlex">
-                  <div className="imgAndName">
-                    <img src={res.img} alt="Product Image" />
-                    <h4>{res.name.slice(0, 36)}</h4>
-                  </div>
-                  <div className="PriceGroup">
-                    <h3>${<NewPrice value={res.price} />}</h3>
-                    <div className="OldpriceandDiscount">
-                      <h4 className="oldPrice">${res.price}</h4>
-                      <Discount value={res.price} />
-                    </div>
-                  </div>
-                </div>
-                <ProductQantity id={res.id} />
-              </div>
-            );
-          })
-        ) : (
-          <div className="emptyImage">
-            <img src={empty} alt="" />
-          </div>
-        )}
-        {array && array.length > 0 && (
+      <div className="cartManager__container">
+          <h2 className="header__name">Shopping History</h2>
+        <div className="cart__items__list">
+          {cartItems && cartItems?.length !== 0 ? (
+            cartItems?.map((res: any) => {
+              return <CartCard {...res}/>
+            })
+          ) : (
+           <EmptyState header="Your Cart Is Empty" text="Please Add products to Cart"/>
+          )}
+        </div>
+        {/* <div> */}
+ 
           <div className="subTotalContainer">
-            <h3>CART SUMMARY</h3>
+            <h3> SUMMARY</h3>
             <div className="subTotal">
-              <h3>Subtotal</h3>
-              <h3>
-                $
-                {array
-                  .reduce((a, b): number => {
-                    console.log(array);
-                    return a + b;
-                  }, 0)
-                  .toFixed(2)}
-              </h3>
+              <p>No. of items</p>
+              <h4>{cartItems?.length}</h4>
             </div>
-            <h3 className="Checkout" onClick={checkoutHandler}>
+            <div className="subTotal">
+              <p>Subtotal</p>
+              {subtotalHandler()}
+            </div>
+            {/* <div className="subTotal">
+              <p>Delivery</p>
+              <h4>₦1,000</h4>
+            </div> */}
+            {/* <div className="subTotal">
+              <p>Tax</p>
+            </div> */}
+            {/* <div className="line"></div> */}
+            {/* <div className="subTotal">
+              <h3>Total Price</h3>
+              {`${subtotalHandler()} ${+ 1000}`}
+            </div> */}
+            <button disabled={cartItems === null} className="Checkout" onClick={checkoutHandler}>
               CHECKOUT
-            </h3>
+            </button>
+            
           </div>
-        )}
-        {display && <Checkout func={clearHandler} arr={array} />}
+        
+        {/* {display && <Checkout func={clearHandler} arr={cartItems} />} */}
+        {/* </div> */}
       </div>
     </CartManagerStyle>
   );

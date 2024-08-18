@@ -1,15 +1,15 @@
-import Note from "../../Organism/NoteArea/NoteArea";
+import CartStyle from "./CartStyles";
 import CartManager from "../../Organism/CartManager/CartManager";
 import Footer from "../../Organism/Footer/Footer";
+import Navbar from "../NavbarTemplate/NavbarTemplate";
 
 const Cart = (): JSX.Element => {
-  const header: string = "Welcome, Complete and checkout your order here";
   return (
-    <div>
-      <Note text={header} />
+    <CartStyle>
+      <Navbar/>
       <CartManager />
       <Footer />
-    </div>
+    </CartStyle>
   );
 };
 export default Cart;

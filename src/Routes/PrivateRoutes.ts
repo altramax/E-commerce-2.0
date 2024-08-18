@@ -3,6 +3,7 @@ import AccountInformation from "../Components/Organism/AccountInformation/Accoun
 // import HomePageTemplate from "../Components/Templates/HomePageTemplate/HomePageTemplate";
 import Orders from "../Components/Organism/Orders/Orders";
 import ContactUs from "../Components/Organism/Contactus/ContactUs";
+import CheckoutTemplate from "../Components/Templates/CheckoutTemplate/CheckoutTemplate";
 
 const routes = [
   {
@@ -29,6 +30,14 @@ const routes = [
       },
     ],
   },
+  // {
+  //   elements: [
+  //     {
+  //       path: "/checkout",
+  //       component: CheckoutTemplate,
+  //     },
+  //   ],
+  // },
 ];
 
 export default routes;

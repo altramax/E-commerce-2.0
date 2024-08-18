@@ -1,148 +1,174 @@
 import AddToCartStyle from "./AddToCartStyle";
 import { useState, useEffect } from "react";
 import { GiShoppingCart } from "react-icons/gi";
-// import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
+
 import {
-  addToCart,
-  clearCart,
-  getCartItem,
-  updateItem,
+  AuthAddToCart,
+  AuthDeleteItem,
+  AuthUpdateCart,
+  updateProductsData,
+  localAddItem,
+  localUpdateItem,
+  localDeleteItem,
 } from "../../../Redux/CartSlice";
 
-export interface dataStructure {
-  title: string;
-  category: string;
-  description: string;
-  image: string;
-  price: number;
-  rating: { rate: number };
-  id: number;
-}
-
 export interface postStructure {
+  id: string;
   name: string;
-  img: string;
-  price: number;
-  quantity: number;
-  rating: number;
-  id: number;
+  description: string;
+  price: number | string;
+  discount: number | string;
+  nameOfDiscount: string;
+  category: string;
+  images: {}[];
+  sizes: {}[];
+  gender: {}[];
+  dateCreated: number | string;
 }
 
-const AddToCart = (props: dataStructure): JSX.Element => {
+const AddToCart = (product: postStructure): JSX.Element => {
   const [count, setCount] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
   const dispatch = useAppDispatch();
-  const items = useAppSelector((state) => state.cart);
 
-  const addCount = (data: number) => {
-    let item = items.cartItems.data.filter((res: any) => res.id === data)[0];
-    console.log(item.quantity, count);
-    return item.quantity + count
+  const user = useAppSelector((state: any) => state.user.user);
+  const cartItems = useAppSelector((state) => state.cart.products);
+
+  useEffect(() => {
+    cartItems?.map((items: any) => {
+      if (items.id === product.id && items.orderedQuantity > 0) {
+        setCount(items.orderedQuantity);
+      }
+    });
+  }, [cartItems]);
+
+  // let getcart = async () => {
+  //   const docRef = doc(db, "Cart", user?.uid);
+  //   try {
+  //     onSnapshot(docRef, async (docSnapshot) => {
+  //       console.log("called");
+  //       let currentItemsArray = docSnapshot.exists()
+  //         ? docSnapshot.data().items
+  //         : [];
+  //       dispatch(updateProductsData(currentItemsArray));
+  //     });
+  //     console.log("updated");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const increaseHandler = async () => {
+    const arg: any = {
+      id: product.id,
+      orderedQuantity: count + 1,
+      user: user?.uid,
+    };
+    if (user?.uid) {
+      await dispatch(AuthUpdateCart(arg));
+      // getcart();
+    } else if (user?.uid === undefined) {
+      dispatch(localUpdateItem(arg));
+    }
   };
 
-
-  const postHandler = async (data: dataStructure) => {
-    if (items.cartIds.includes(data.id) && count > 0) {
-      console.log("this is patch");
-      const update = {
-        id: data.id,
-        quantity: addCount(data.id),
-      };
-      console.log(update);
-      await dispatch(updateItem(update)); 
-      setMessage("update");
-      await dispatch(getCartItem());
+  const decreaseHandler = async () => {
+    const arg: any = {
+      id: product.id,
+      orderedQuantity: count - 1,
+      user: user?.uid,
+    };
+    if (count > 1 && user?.uid) {
+      await dispatch(AuthUpdateCart(arg));
+      // getcart();
+    } else if (count === 1 && user?.uid) {
+      // getcart();
+      console.log("auth delete");
+      await dispatch(AuthDeleteItem(arg));
       setCount(0);
-      setTimeout(() => {
-        setMessage("");
-        console.log(count);
-      }, 2000);
-    } else if (!items.cartIds.includes(data.id) && count > 0) {
-      console.log("this is post");
-      const post = {
-        id: props.id,
-        name: props.title,
-        img: props.image,
-        price: props.price,
-        quantity: count,
-        rating: props.rating.rate,
-      };
-     await dispatch(addToCart(post));
-     setMessage("add");
-     await dispatch(getCartItem());
-     setCount(0);
-      setTimeout(() => {
-        setMessage("");
-      }, 2000);
-    } else if (count === 0) {
-      setMessage("failed");
-      setTimeout(() => {
-        setMessage("");
-      }, 2000);
+    }
+
+    if (count > 1 && user?.uid === undefined) {
+      dispatch(localUpdateItem(arg));
+    } else if (count === 1 && user?.uid === undefined) {
+      dispatch(localDeleteItem(arg));
+      setCount(0);
     }
   };
 
-  const increaseHandler = () => {
-    setCount(count + 1);
-  };
-
-  const decreaseHandler = () => {
-    if (count >= 1) {
-      setCount(count - 1);
+  const addToCartHandler = async () => {
+    const arg: any = {
+      product: {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        discount: product.discount,
+        nameOfDiscount: product.nameOfDiscount,
+        category: product.category,
+        images: product.images,
+        sizes: product.sizes,
+        gender: product.gender,
+        dateCreated: product.dateCreated,
+        orderedQuantity: 1,
+      },
+      user: user?.uid,
+    };
+    if (user?.uid) {
+      await dispatch(AuthAddToCart(arg));
+      // getcart();
+    } else {
+      await dispatch(localAddItem(arg));
     }
   };
 
-  const renderHandlerMessage = () => {
-    if (message === "update") {
-      return <p className="errorMessage green">Product Updated Successfully</p>;
-    } else if (message === "add") {
-      return <p className="errorMessage green">Product Added Successfully</p>;
-    } else if (message === "failed") {
-      return <p className="errorMessage">Select Quantity of Product</p>;
-    }
-  };
+  // console.log(count);
+  // console.log(product);
 
   return (
     <AddToCartStyle>
-      <>
-        {renderHandlerMessage()}
-        <div className="addToCartGroup">
-          {/* <button onClick={()=>{
-  dispatch(clearCart(items.cartItems.data))
-    dispatch(getCartItem());
-          }}>clear cart</button> */}
-          <div
-            className="addToCartButton"
-            onClick={() => {
-              postHandler(props);
-            }}
-          >
-            <span> Add To Cart</span>
-            <GiShoppingCart size={20} />
-          </div>
+      <div className="addtocart__container">
 
-          <div className="countGroup">
-            <span
-              onClick={() => {
-                decreaseHandler();
-              }}
-              className="countButton"
-            >
-              -
-            </span>
-            <span className="counter">{count}</span>
-            <span
-              onClick={() => {
-                increaseHandler();
-              }}
-              className="countButton"
-            >
-              +
-            </span>
-          </div>
+      {count === 0 && (
+        <button
+          className="addToCartButton"
+          title="Add Quantity and Click here"
+          onClick={() => {
+            addToCartHandler();
+          }}
+        >
+          <span> Add To Cart</span>
+          <GiShoppingCart size={20} />
+        </button>
+      )}
+
+      {count !== 0 && (
+        <div className="countGroup">
+          <span
+            onClick={() => {
+              decreaseHandler();
+            }}
+            className="countButton"
+          >
+            -
+          </span>
+          <span className="counter">{count}</span>
+          <span
+            onClick={() => {
+              increaseHandler();
+            }}
+            className="countButton"
+          >
+            +
+          </span>
         </div>
-      </>
+      )}
+
+      <div className="hide">
+      ({count} item(s) added)
+      </div>
+      </div>
     </AddToCartStyle>
   );
 };

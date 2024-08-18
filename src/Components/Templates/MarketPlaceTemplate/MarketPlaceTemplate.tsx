@@ -1,16 +1,17 @@
-import AllProducts from "../../Organism/ProductsContainer/AllProductsContainer";
 import Footer from "../../Organism/Footer/Footer";
-import Note from "../../Organism/NoteArea/NoteArea";
+import Navbar from "../NavbarTemplate/NavbarTemplate";
+import CategoryLayout from "../../Organism/CategoryLayout/CategoryLayout";
 
-const MarketPlaceTemplate = () =>{
-  const info = "WELCOME";
+const MarketPlaceTemplate = () => {
   return (
     <div>
-      <Note text={info} />
-     <AllProducts/>
+      <Navbar />
+      <div>
+        <CategoryLayout />
+      </div>
       <Footer />
     </div>
   );
-}
+};
 
-export default MarketPlaceTemplate
+export default MarketPlaceTemplate;

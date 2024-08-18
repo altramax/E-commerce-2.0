@@ -10,14 +10,12 @@ import { successful } from "./AlertSlice";
 
 // Define a type for the slice state
 interface valueState {
-  userId: string;
-  message: string;
+  user: any;
 }
 
 // Define the initial state using that type
 const initialState: valueState = {
-  userId: "",
-  message: "",
+  user: null,
 };
 
 type propsType = {
@@ -51,6 +49,7 @@ export const googleLogin = createAsyncThunk("google/sigin", async(arg, {dispatch
 export const logOut = createAsyncThunk("Signout", async(arg,{dispatch})=>{
   let user = await signOut(auth);
   dispatch(successful())
+  console.log("called")
   return user
 })
 
@@ -60,41 +59,38 @@ export const UserAuthSlice = createSlice({
   name: "UserAuth",
   initialState,
   reducers: {
-    resetErrorMessage : (state)=>{
-      state.message = ""
-    }
+  
   },
   extraReducers: (builder) => {
     builder.addCase(createUser.fulfilled, (state, action) => {
-      state.userId = action.payload.user.uid;
+      state.user = action.payload.user;
     });
-    builder.addCase(createUser.rejected, (state, action) => {
-      state.userId = "";
-      state.message = "Request Failed";
+    builder.addCase(createUser.rejected, (state) => {
+      state.user = null;
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
-      state.userId = action.payload.user.uid;
+      state.user = action.payload.user;
     });
-    builder.addCase(userLogin.rejected, (state, action) => {
-      state.userId = "";
-      console.log(action.error.stack);
-      state.message = "Request Failed";
+    builder.addCase(userLogin.rejected, (state) => {
+      state.user = null
+
+      
     });
     builder.addCase(googleLogin.fulfilled, (state, action) => {
-      state.userId = action.payload.user.uid;
+      state.user = action.payload.user;
     });
     builder.addCase(googleLogin.rejected, (state) => {
-      state.userId = "";
-      state.message = "Request Failed";
+      state.user = null
+      
     });
     builder.addCase(logOut.fulfilled, (state) => {
-      state.userId = "";
+      state.user = null
     });
     builder.addCase(logOut.rejected, (state) => {
-      state.message = "Request Failed";
+      state.user = null
     });
   },
 });
 
-export const { resetErrorMessage } = UserAuthSlice.actions;
+export const {  } = UserAuthSlice.actions;
 export default UserAuthSlice.reducer;

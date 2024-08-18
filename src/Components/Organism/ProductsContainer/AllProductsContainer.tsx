@@ -1,34 +1,45 @@
 import { useState, useEffect } from "react";
 import AllProductsStyle from "./AllProductsStyle.js";
 import LazyLoading from "../../Molecules/ProductsLazyLoading/ProductsLazyLoading.js";
-import Modal from "../ProductDetails/ProductDetails";
+import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal.js";
 import AddToCart from "../AddToCart/AddToCart.js";
-import Rating from "../../Molecules/Rating/Rating.js";
-import Discount from "../Prices/Discount";
-import { getProducts } from "../../../Redux/AllProductsSlice.js";
+import { getAllProducts } from "../../../Redux/ProductsSlice.js";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks.js";
-import testImage from "../../assets/Images/men.jpg";
+import EmptyState from "../../Molecules/EmptyState/EmptyState.js";
 
-type dataStructure = {
-  title: string;
+type productQuery = {
   category: string;
-  description: string;
-  image: string;
-  price: number;
-  rating: { rate: number };
-  id: number;
-  modal: JSX.Element;
 };
 
-const AllProducts = (): JSX.Element => {
+const AllProducts = ({ category }: productQuery): JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useState<number>(0);
-  const data = useAppSelector((state) => state.products);
+  const [selectedItem, setSelectedItem] = useState<any>("");
+  const [search, setSearch] = useState<boolean>(false);
+  const products = useAppSelector((state) => state.products.products);
+  const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getAllProducts());
   }, []);
+
+
+  useEffect(() => {
+    // console.log(products);
+    const searchTerm = products && products.filter((product: any) => product.category === category);
+
+    // console.log(products && searchTerm.length);
+    if (category === "allProducts") {
+      console.log("enter all");
+    } else if (searchTerm !== null  && category !== "allProducts" &&
+      searchTerm.length === 0
+    ) {
+      setSearch(true);
+      console.log("enter");
+    }
+
+
+  }, [products, category]);
 
   const openModal = () => {
     setModal(true);
@@ -40,67 +51,89 @@ const AllProducts = (): JSX.Element => {
 
   const renderModal = () => {
     if (modal === true) {
-      let item = data.products.filter((res: any) => res.id === selectedItem)[0];
-      return (
-        <Modal
-          name={item.title}
-          img={item.image}
-          price={item.price}
-          cancle={closeModal}
-          category={item.category}
-          rating={<Rating compare={item.rating.rate} />}
-          description={item.description}
-          id={item.id}
-        />
-      );
+      return <ProductDetailsModal {...selectedItem} cancle={closeModal} />;
     }
   };
+
+  const productImageHandler = (images: any) => {
+    let img = images?.find((image: any) => {
+      if (image.url !== "") {
+        return image.url;
+      }
+    })?.url;
+    return img !== undefined ? img : "";
+  };
+
+  // console.log(
+  //   products && products.find((product: any) => product.category === category)
+  // );
 
   return (
     <AllProductsStyle>
       <>
-        {renderModal()}
         <div className="card__group">
-          {data && data.products
-            ? data.products.map((res: any, i: number) => {
-                return (
-                  <div
-                    className="card__container"
-                    key={res.id}
-                    onClick={() => setSelectedItem(res.id)}
-                  >
-                    <div className="card__container__sub" onClick={openModal}>
-                      <Discount value={res.price} />
+          {renderModal()}
 
-                      <div className="card__image__container">
-                        <img
-                          src={res.image}
-                          alt="Product Image"
-                          className="main__image"
-                        />
-                        <img
-                          src={testImage}
-                          alt="test"
-                          className="hover__image"
-                        />
-                      </div>
-                      <h2>{res.title.slice(0, 25)}</h2>
-                      <h3>${res.price}</h3>
-                    </div>
-
-                    <AddToCart
-                      title={res.title}
-                      category={res.category}
-                      description={res.description}
-                      image={res.image}
-                      price={res.price}
-                      rating={res.rating}
-                      id={res.id}
+          {products?.map((product: any, i: any) => {
+            if (category === "allProducts" && product.category !== category) {
+              return (
+                <div
+                  className="card__container"
+                  key={i}
+                  onClick={() => setSelectedItem(product)}
+                >
+                  <div className="card__inner__container">
+                    <img
+                      src={productImageHandler(product?.images)}
+                      alt="Product Image"
+                      className="product__image"
+                      onClick={openModal}
                     />
+
+                    <div className="cart">
+                      <AddToCart {...product} />
+                    </div>
                   </div>
-                );
-              })
-            : null}
+                  <p className="product__name">{product?.name.slice(0, 15)}</p>
+                  <p className="product__price">{`₦${Number(
+                    product.price
+                  ).toLocaleString()}`}</p>
+                </div>
+              );
+            } else if (product.category === category) {
+              return (
+                <div
+                  className="card__container"
+                  key={i}
+                  onClick={() => setSelectedItem(product)}
+                >
+                  <div className="card__inner__container">
+                    <img
+                      src={productImageHandler(product?.images)}
+                      alt="Product Image"
+                      className="product__image"
+                      onClick={openModal}
+                    />
+
+                    <div className="cart">
+                      <AddToCart {...product} />
+                    </div>
+                  </div>
+                  <p className="product__name">{product?.name.slice(0, 15)}</p>
+                  <p className="product__price">{`₦${Number(
+                    product.price
+                  ).toLocaleString()}`}</p>
+                </div>
+              );
+            }
+          })}
+
+          {search && (
+            <EmptyState
+              header="Category Not Available"
+              text="This Category is currently unavailable, please check back soon"
+            />
+          )}
         </div>
       </>
     </AllProductsStyle>

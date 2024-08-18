@@ -1,20 +1,29 @@
-import { Fragment, useState, useEffect } from "react";
+import NewPriceStyle from "./NewPriceStyle";
+import arrowDown from "../../assets/Icons/arrowDownLongLight.svg";
 
 type propType = {
-  value: number;
+  price: number;
+  discount: any;
 };
 
-export default function NewPrice(props: propType) {
-  const [currentprice, setCurrentPrice] = useState<number>(0);
+export default function NewPrice({ price, discount }: propType) {
+  const cost = Number(price);
+  const dis = discount ? Number(discount) : "";
+  const percentDis = dis !== "" ? (dis * 100) / cost : 0 ;
+  const newPrice = dis !== "" ? cost - dis : cost;
+  const newDis = percentDis.toFixed(0)
 
-  useEffect(() => {
-    if (props.value > 100 && props.value < 200) {
-      setCurrentPrice(props.value - props.value * (15 / 100));
-    } else if (props.value > 200) {
-      setCurrentPrice(props.value - props.value * (20 / 100));
-    } else {
-      setCurrentPrice(props.value - props.value * (10 / 100));
-    }
-  }, []);
-  return <Fragment>{currentprice.toFixed(2)}</Fragment>;
+  return (
+    <NewPriceStyle>
+      <div className="flex">
+        {dis !== "" && (
+          <small className="dis">
+            {newDis}%<img src={arrowDown} alt="" id="image" />
+          </small>
+        )}
+        {newPrice && <h2>₦{newPrice.toLocaleString()}</h2>}
+        {dis !== "" && <h5>₦{Number(price).toLocaleString()}</h5>}
+      </div>
+    </NewPriceStyle>
+  );
 }

@@ -3,14 +3,14 @@ import { devices } from "../../Media Queries/Media";
 
 const FooterStyle = styled.div`
 
+
 .FooterContainer {
     text-align: center;
-    background-color: #000;
+    background-color: #20272F;
     color: #fff;
+    padding: 3rem 0;
     .logo {
-      padding-top: 2rem;
       font-size: 2rem;
-      margin: 2rem 0;
       font-family: "Bruno Ace SC", cursive;
     }
     ul {

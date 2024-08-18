@@ -48,7 +48,7 @@ const SignUpModal = ({ signIn }: signupType): JSX.Element => {
     <SignUpModalStyle>
       <form className={`signup`}>
         <div className="signin__header__img">
-          <img onClick={() => navigate(-1)} src={cancle} alt="" />
+          <img onClick={() => navigate("/")} src={cancle} alt="" />
         </div>
         <div className="signin__header">
    
