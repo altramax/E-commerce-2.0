@@ -7,24 +7,20 @@ import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
 import { useNavigate } from "react-router-dom";
 import { logOut } from "../../../Redux/AuthSlice";
 import { CgProfile } from "react-icons/cg";
-import { IoIosSearch } from "react-icons/io";
+
 import { db } from "../../../Config/Config";
 import { doc, onSnapshot } from "firebase/firestore";
 import { localClearCart, updateProductsData } from "../../../Redux/CartSlice";
+import SearchBar from "../../Organism/SearchBar/SearchBar";
 
 const Navbar = (): JSX.Element => {
-  const [menuIcon, setMenuIcon] = useState<boolean>(false);
-
-  const [response, setResponse] = useState<boolean>(false);
   const user = useAppSelector((state) => state.user.user);
-  const alert = useAppSelector((state) => state.alert);
-  const errorMessage = useAppSelector((state) => state.user);
   const cart = useAppSelector((state) => state.cart.products);
+  const [response, setResponse] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-
     if (user?.uid) {
       const docRef = doc(db, "Cart", user?.uid);
       onSnapshot(docRef, (docSnapshot) => {
@@ -43,8 +39,6 @@ const Navbar = (): JSX.Element => {
     }
   }, [user?.uid]);
 
-
-
   const goToProfile = () => {
     navigate("/userprofile");
   };
@@ -55,6 +49,8 @@ const Navbar = (): JSX.Element => {
     dispatch(localClearCart());
   };
 
+  // console.log(products);
+
   return (
     <NavbarStyle>
       <>
@@ -62,14 +58,8 @@ const Navbar = (): JSX.Element => {
           <Link to="/" className="Logo">
             OneStore
           </Link>
-
-          <div className="searchGroup">
-            <div className="wrapper">
-              <input type="text" />
-              <div>
-                <IoIosSearch size="25" />
-              </div>
-            </div>
+          <div className="search__div">
+            <SearchBar />
           </div>
 
           <div className="group">

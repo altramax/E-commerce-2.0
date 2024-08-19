@@ -3,7 +3,7 @@ import { devices } from "../../Media Queries/Media";
 
 const NavbarStyle = styled.div`
   .NavContainer {
-    z-index: 2;
+    z-index: 4;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,6 +48,7 @@ const NavbarStyle = styled.div`
   }
 
   .profile_name_icon {
+  z-index: 2;
     position: fixed;
     right: 0;
     bottom: 1rem;
@@ -64,43 +65,16 @@ const NavbarStyle = styled.div`
       justify-content: center;
       align-items: center;
       gap: 10px;
-      div{
-         width: fit-content;
+      div {
+        width: fit-content;
       }
     }
   }
-
-  // .profileAndSearch {
-  //   display: flex;
-  //   justify-content: space-between;
-  //   align-items: center;
-  //   gap: 30px;
-  //   width: 100%;
-  // }
-
-  .searchGroup {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 1rem 0 1rem 1rem;
-    background-color: #f7f7f7;
-
-    .wrapper {
-      position: relative;
-      width: 50%;
-      div {
-        position: absolute;
-        right: 4px;
-        top: 4px;
-      }
-      input {
-        width: 100%;
-        padding: 8px;
-        border-radius: 10px;
-        outline: none;
-      }
-    }
+  .hidden {
+    display: none;
+  }
+  .visible {
+    display: block;
   }
 
   @media ${devices.tablet} {
@@ -118,13 +92,6 @@ const NavbarStyle = styled.div`
         right: 1.5rem;
       }
 
-      .searchGroup {
-        padding: 1rem 0 1rem 2rem;
-      }
-      // .profile_name_icon {
-      //   right: 2rem;
-      // }
-    }
   }
 
   @media ${devices.smallLaptop} {
@@ -140,15 +107,6 @@ const NavbarStyle = styled.div`
       .cartNotificationIcon {
         right: 4.5rem;
       }
-      .searchGroup {
-        position: relative;
-        max-width: 50%;
-        padding: 0;
-      
-        .wrapper {
-          width: 100%;
-        }
-      }
     }
     .group {
       display: flex;
@@ -163,6 +121,9 @@ const NavbarStyle = styled.div`
         right: 0;
       }
     }
+      .search__div{
+      width: 50%;
+      }
   }
 `;
 export default NavbarStyle;

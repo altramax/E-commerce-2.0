@@ -11,7 +11,7 @@ const Header = () => {
 
   const imgArr = [
     "https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723679021/shirt-mockup-concept-with-plain-clothing_acphex.jpg",
-    "https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723680055/attractive-young-stylish-woman-celebrating-new-year-drinking-champagne-holding-air-balloons-golden-confetti-flying-smiling-happy-white-isolated-wearing-party-dress_llfngn.jpg",
+    "https://res.cloudinary.com/dn9dkcxvs/image/upload/v1724065107/attractive-young-stylish-woman-celebrating-new-year-drinking-champagne-holding-air-balloons-golden-confetti-flying-smiling-happy-white-isolated-wearing-party-dress_gmz8ro.jpg",
     "https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723938049/12624_aygyhi.jpg",
   ];
 

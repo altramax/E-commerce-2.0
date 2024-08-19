@@ -14,6 +14,7 @@ import {
 import { doc, onSnapshot } from "firebase/firestore";
 
 import { db } from "../../../Config/Config";
+import ConfirmationModal from "../../Molecules/ConfirmationModal/ConfirmationModal";
 
 type cartType = {
   productId: string;
@@ -43,7 +44,7 @@ const CartItemCounter = ({ productId }: cartType): JSX.Element => {
   const [product, setProducts] = useState<any>("");
   const user = useAppSelector((state: any) => state.user.user);
   const cartItems = useAppSelector((state) => state.cart.products);
-  // const [cartItems, setCartItems] = useState<any>();
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
   useEffect(() => {
     products?.map((items: any) => {
@@ -121,6 +122,15 @@ const CartItemCounter = ({ productId }: cartType): JSX.Element => {
     } else if (user?.uid === undefined) {
       dispatch(localDeleteItem(arg));
     }
+    closeDeleteModal()
+  };
+
+  const openDeleteModal = () => {
+    setDeleteModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModal(false);
   };
 
   return (
@@ -145,13 +155,14 @@ const CartItemCounter = ({ productId }: cartType): JSX.Element => {
         </span>
       </div>
       <div id="remove__item">
-      <p>Delete</p>
+        <p>Delete</p>
         <img
-          onClick={deleteItemHandler}
+          onClick={openDeleteModal}
           src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813167/trash_ue7ms9.svg"
           alt=""
         />
       </div>
+      <ConfirmationModal description="Are you sure you want to delete this Item" message="Delete Item" onConfirm={deleteItemHandler} isOpen={deleteModal} onClose={closeDeleteModal}/>
     </CartItemCounterStyle>
   );
 };

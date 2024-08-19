@@ -129,45 +129,42 @@ const AddToCart = (product: postStructure): JSX.Element => {
   return (
     <AddToCartStyle>
       <div className="addtocart__container">
-
-      {count === 0 && (
-        <button
-          className="addToCartButton"
-          title="Add Quantity and Click here"
-          onClick={() => {
-            addToCartHandler();
-          }}
-        >
-          <span> Add To Cart</span>
-          <GiShoppingCart size={20} />
-        </button>
-      )}
-
-      {count !== 0 && (
-        <div className="countGroup">
-          <span
+        {count === 0 && (
+          <button
+            className="addToCartButton"
+            title="Add Quantity and Click here"
             onClick={() => {
-              decreaseHandler();
+              addToCartHandler();
             }}
-            className="countButton"
           >
-            -
-          </span>
-          <span className="counter">{count}</span>
-          <span
-            onClick={() => {
-              increaseHandler();
-            }}
-            className="countButton"
-          >
-            +
-          </span>
-        </div>
-      )}
+            <span> Add To Cart</span>
+            <GiShoppingCart size={20} />
+          </button>
+        )}
 
-      <div className="hide">
-      ({count} item(s) added)
-      </div>
+        {count !== 0 && (
+          <div className="countGroup">
+            <span
+              onClick={() => {
+                decreaseHandler();
+              }}
+              className="countButton"
+            >
+              -
+            </span>
+            <span className="counter">{count}</span>
+            <span
+              onClick={() => {
+                increaseHandler();
+              }}
+              className="countButton"
+            >
+              +
+            </span>
+          </div>
+        )}
+
+        <div className="hide">({count} item(s) added)</div>
       </div>
     </AddToCartStyle>
   );

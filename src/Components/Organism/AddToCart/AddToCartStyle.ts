@@ -64,7 +64,7 @@ const AddToCartStyle = styled.div`
 
   .errorMessage {
     position: fixed;
-    z-index: 4;
+    z-index: 1;
     color: #fff;
     background-color: #e70680;
     font-size: 1.5rem;

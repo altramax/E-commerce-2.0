@@ -1,19 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  doc,
-  getDoc,
-  collection,
-  getDocs,
-
-} from "firebase/firestore";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../Config/Config";
+import AllProducts from "../Components/Organism/ProductsContainer/AllProductsContainer";
 
 type productsType = {
-  products: any;
+  allProducts: any;
+  categoryProducts: any;
 };
 
 const initialState: productsType = {
-  products: null,
+  categoryProducts: null,
+  allProducts: null
 };
 
 export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
@@ -35,7 +32,7 @@ export const getProductCategory = createAsyncThunk(
 
     if (docSnap.exists()) {
       console.log(docSnap.data());
-      return docSnap.data();
+      return docSnap.data().items;
     } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
@@ -52,20 +49,20 @@ export const ProductsSlice = createSlice({
       let results: any = [];
 
       action.payload?.forEach((products: any) => {
-        products?.items?.filter((item: any) => item && results.push(item) );
+        products?.items?.filter((item: any) => item && results.push(item));
       });
-      state.products = results;
+      state.allProducts = results;
     });
 
     builder.addCase(getAllProducts.rejected, (state) => {
-      state.products = null;
+      state.allProducts = null;
     });
 
     builder.addCase(getProductCategory.fulfilled, (state, action) => {
-      state.products = action.payload;
+      state.categoryProducts = action.payload;
     });
     builder.addCase(getProductCategory.rejected, (state) => {
-      state.products = null;
+      state.categoryProducts = null;
     });
   },
 });

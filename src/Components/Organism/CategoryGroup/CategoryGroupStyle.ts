@@ -13,7 +13,7 @@ const CategoryGroupStyle = styled.div`
    -ms-overflow-style: none;
     scrollbar-width: none;
     padding: 20px;
-    margin: 40px 0 50px 0;
+    margin: 40px 0 40px 0;
     overflow: auto;
     display: flex;
     justify-content: start;

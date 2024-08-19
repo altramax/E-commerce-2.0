@@ -2,6 +2,45 @@ import styled from "styled-components";
 import { devices } from "../../Media Queries/Media";
 
 const AllProductsStyle = styled.div`
+  .lazy-loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh; /* Adjust based on your use case */
+  }
+
+  .lazy-loading {
+    width: 100%;
+    max-width: 300px; /* Adjust as needed */
+    height: 180px; /* Adjust as needed */
+    background: linear-gradient(
+      135deg,
+      rgba(211, 223, 232, 0.5) 30%,
+      rgba(169, 184, 197, 0.5) 38%,
+      rgba(168, 182, 193, 0.6) 41%,
+      rgba(168, 182, 193, 0.6) 50%,
+      rgba(168, 182, 193, 0.6) 50%,
+      rgba(169, 184, 197, 0.6) 51%,
+      rgba(211, 223, 232, 0.6) 57%,
+      rgba(211, 223, 232, 0.6) 80%,
+      rgba(211, 223, 232, 0.6) 80%
+    );
+
+    background-size: 200% 100%;
+    border-radius: 8px;
+    animation: loadingAnimation 1.5s infinite ease;
+  }
+
+  @keyframes loadingAnimation {
+    0% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: 0 100%;
+    }
+  }
+
   @keyframes popUp {
     0% {
       transform: scaleY(0);
@@ -35,7 +74,7 @@ const AllProductsStyle = styled.div`
     display: flex;
     // min-height: 80vh;
     justify-content: start;
-    align-items: center;
+    align-items: start;
     // margin-bottom: 2rem;
     row-gap: 70px;
     flex-wrap: wrap;
@@ -63,7 +102,6 @@ const AllProductsStyle = styled.div`
     margin: 0 auto 2rem auto;
     background-color: #fff;
     border-radius: 16px;
-    
 
     .card__inner__container {
       box-shadow: -10px 11px 23px rgba(0, 0, 0, 0.25);
@@ -78,7 +116,7 @@ const AllProductsStyle = styled.div`
       .cart {
         position: absolute;
         display: inline;
-        z-index: 2;
+        z-index: 1;
         bottom: 0;
         width: 150px;
       }
@@ -112,6 +150,31 @@ const AllProductsStyle = styled.div`
   }
 
   @media ${devices.tablet} {
+    .lazy-loading {
+      width: 180px;
+      height: 230px;
+    }
+    .card__container {
+      width: 180px;
+      height: 230px;
+
+      .card__inner__container {
+        align-items: start;
+        padding: 30px 20px;
+        height: 230px;
+
+        .cart {
+          width: 180px;
+        }
+      }
+
+      .product__image {
+        width: 130px;
+        height: 150px;
+        cursor: pointer;
+      }
+    }
+
     .emptyImage {
       width: 50vw;
 

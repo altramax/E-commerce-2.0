@@ -60,6 +60,56 @@ const CartItemCounterStyle = styled.div`
     }
   }
 
+  .delOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 3;
+  }
+  .deleteModal {
+    width: 15rem;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    background-color: #fff;
+    z-index: 5;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    .buttons {
+      width: 100%;
+      display: flex;
+      margin-top: 1rem;
+      justify-content: space-between;
+      button {
+        padding: 0.4rem 0.7rem;
+        border: none;
+        font-weight: bold;
+        border-radius: 0.4rem;
+        cursor: pointer;
+      }
+      .btnCancle {
+        background-color: #d2cbcb;
+      }
+      .btnDelete {
+        background-color: #ff0000;
+        color: #fff;
+      }
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+
   @media (min-width: 768px) {
   }
 `;
