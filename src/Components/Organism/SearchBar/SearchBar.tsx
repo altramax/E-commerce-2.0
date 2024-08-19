@@ -6,22 +6,12 @@ import { IoIosSearch } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
-  const [menuIcon, setMenuIcon] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const [results, setResults] = useState<any>("");
-  const [reload, setReload] = useState<Boolean>(false);
   const [openSearchbar, setOpenSearchbar] = useState<boolean>(false);
   const products = useAppSelector((state) => state.products.allProducts);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     console.log("Reloaded");
-//   }, [reload]);
-
-//   const reloadHandler = () => {
-//     setReload(!reload);
-//   };
 
   const openSearchBarHandler = () => {
     dispatch(getAllProducts());
@@ -45,7 +35,6 @@ const SearchBar = () => {
   };
 
   const handleNavigation = (route: string) => {
-    // reloadHandler();
     navigate(`/category?id=${route}`);
     closeSearchBarHandler()
     setSearch("")

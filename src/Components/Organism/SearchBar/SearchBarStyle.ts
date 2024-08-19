@@ -30,6 +30,7 @@ const SearchBarStyle = styled.div`
 
   .search_results {
     position: absolute;
+    bottom: 65px;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -73,6 +74,15 @@ const SearchBarStyle = styled.div`
           width: 100%;
         }
       }
+
+      
+  .search_results {
+  top: 45px;
+
+  height: fit-content;
+
+ 
+    }
   }
 `;
 
