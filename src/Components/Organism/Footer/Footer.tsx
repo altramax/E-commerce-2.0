@@ -18,16 +18,15 @@ const Footer = (): JSX.Element => {
               <img src={facebook} alt="" />
             </li>
             <li>
-              
               <img src={instagram} alt="" />
             </li>
             <li>
               <img src={twitter} alt="" />
             </li>
-          </ul> 
+          </ul>  
         </div>
         <div>
-          <h3>COMPANTY</h3>
+          <h3>COMPANY</h3>
           <p>Contact</p>
           <p>About Us</p>
           <p>Affiliates</p>

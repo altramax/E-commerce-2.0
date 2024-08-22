@@ -7,11 +7,11 @@ import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
 import { useNavigate } from "react-router-dom";
 import { logOut } from "../../../Redux/AuthSlice";
 import { CgProfile } from "react-icons/cg";
-
 import { db } from "../../../Config/Config";
 import { doc, onSnapshot } from "firebase/firestore";
 import { localClearCart, updateProductsData } from "../../../Redux/CartSlice";
 import SearchBar from "../../Organism/SearchBar/SearchBar";
+import useScrollDirection from "../../../hooks/UseScrollDirection";
 
 const Navbar = (): JSX.Element => {
   const user = useAppSelector((state) => state.user.user);
@@ -19,6 +19,8 @@ const Navbar = (): JSX.Element => {
   const [response, setResponse] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const scrollDirection = useScrollDirection();
+
 
   useEffect(() => {
     if (user?.uid) {
@@ -54,7 +56,8 @@ const Navbar = (): JSX.Element => {
   return (
     <NavbarStyle>
       <>
-        <div className="NavContainer">
+        <div className={`NavContainer ${
+        scrollDirection === "down" ? "goUp" : ""}`}>
           <Link to="/" className="Logo">
             OneStore
           </Link>

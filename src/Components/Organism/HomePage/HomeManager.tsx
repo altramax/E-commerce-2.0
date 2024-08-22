@@ -1,12 +1,22 @@
 import HomeManagerStyle from "./HomeMangerStyle";
 import { useNavigate } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
+import { SlArrowLeft } from "react-icons/sl";
+import { SlArrowRight } from "react-icons/sl";
 import CategoryGroup from "../CategoryGroup/CategoryGroup";
 import AllProducts from "../ProductsContainer/AllProductsContainer";
 import Header from "../Header/Header";
+import useHorizontalScroll from "../../../hooks/UseScrollHorizontally";
 
 const HomeManager = (): JSX.Element => {
   const navigate = useNavigate();
+  const {
+    scrollContainer,
+    showLeftButton,
+    showRightButton,
+    scrollLeft,
+    scrollRight,
+  } = useHorizontalScroll();
 
   const handleNavigation = (route: string) => {
     navigate(`/category?id=${route}`);
@@ -27,7 +37,12 @@ const HomeManager = (): JSX.Element => {
 
       <section className="brandsContainer">
         <h3>Brands</h3>
-        <div className="brandsGroup">
+        <div className="brandsGroup" ref={scrollContainer}>
+          {showLeftButton && (
+            <div className="leftscroll direction" onClick={scrollLeft}>
+              <SlArrowLeft size="20px" />
+            </div>
+          )}
           <img
             src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813147/gucci_rif0l2.jpg"
             alt=""
@@ -58,6 +73,11 @@ const HomeManager = (): JSX.Element => {
             alt=""
             className="brands"
           />
+          {showRightButton && (
+            <div className="rightscroll direction" onClick={scrollRight}>
+              <SlArrowRight size="20px" />
+            </div>
+          )}
         </div>
       </section>
 

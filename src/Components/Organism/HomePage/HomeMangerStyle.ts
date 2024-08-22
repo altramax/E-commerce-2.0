@@ -2,21 +2,44 @@ import styled from "styled-components";
 import { devices } from "../../Media Queries/Media";
 
 const HomeManagerStyle = styled.div`
-  .brandsContainer {
-    margin: 0 1rem;
+  // scroll-behaviour: smooth;
 
-    padding: 70px 0 70px 0;
+  .brandsContainer {
+    // margin: 0 1rem;
+    padding: 70px 50px;
     // background-color: #fcfcfc;
+
+    .direction {
+      display: none;
+      position: absolute;
+      width: fit-content;
+      border: 1px solid grey;
+      border-radius: 50%;
+      padding: 5px;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .rightscroll {
+      right: 16px;
+    }
+    .leftscroll {
+      left: 16px;
+    }
+
     h3 {
       padding-bottom: 1rem;
       text-align: center;
       font-family: "Bruno Ace SC", cursive;
     }
     .brandsGroup {
+      // position: relative;
       -ms-overflow-style: none;
       scrollbar-width: none;
       display: flex;
       justify-content: space-between;
+      scroll-behaviour: smooth;
+      align-items: center;
       overflow: auto;
       gap: 30px;
       .brands {
@@ -26,6 +49,12 @@ const HomeManagerStyle = styled.div`
     }
     .brandsGroup::-webkit-scrollbar {
       display: none;
+    }
+  }
+
+  .brandsContainer:hover {
+    .direction {
+      display: flex;
     }
   }
 
@@ -119,7 +148,18 @@ const HomeManagerStyle = styled.div`
     }
   }
 
+
+
+
+
+
   @media ${devices.tablet} {
+    .brandsContainer:hover {
+      .direction {
+        display: none;
+      }
+    }
+
     #large {
       width: 300px;
     }

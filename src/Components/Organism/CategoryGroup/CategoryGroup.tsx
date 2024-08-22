@@ -1,7 +1,20 @@
 import CategoryGroupStyle from "./CategoryGroupStyle";
 import CategoryCard from "../../Molecules/CategoryCard/CategoryCard";
+import useHorizontalScroll from "../../../hooks/UseScrollHorizontally";
+import { SlArrowLeft } from "react-icons/sl";
+import { SlArrowRight } from "react-icons/sl";
 
 const CategoryGroup = () => {
+
+  const {
+    scrollContainer,
+    showLeftButton,
+    showRightButton,
+    scrollLeft,
+    scrollRight,
+  } = useHorizontalScroll();
+
+
   const dataObj = [
     {
       image:
@@ -54,10 +67,21 @@ const CategoryGroup = () => {
 
   return (
     <CategoryGroupStyle>
-      <div className="category__group__container">
+      <div className="category__group__container" ref={scrollContainer}>
+        
+      {showLeftButton && (
+          <div className="leftscroll direction" onClick={scrollLeft}>
+            <SlArrowLeft size="20px" />
+          </div>
+        )}
         {dataObj.map((data, i) => {
           return <CategoryCard {...data} key={i}/>;
         })}
+            {showRightButton && (
+          <div className="rightscroll direction" onClick={scrollRight}>
+            <SlArrowRight size="20px" />
+          </div>
+        )}
       </div>
     </CategoryGroupStyle>
   );

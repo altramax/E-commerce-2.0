@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { devices } from "../../Media Queries/Media";
 
 const NavbarStyle = styled.div`
+ 
+
   .NavContainer {
     z-index: 4;
     display: flex;
@@ -47,8 +49,12 @@ const NavbarStyle = styled.div`
     }
   }
 
+   .goUp {
+    top: -110px;
+  }
+
   .profile_name_icon {
-  z-index: 2;
+    z-index: 2;
     position: fixed;
     right: 0;
     bottom: 1rem;
@@ -70,9 +76,11 @@ const NavbarStyle = styled.div`
       }
     }
   }
+
   .hidden {
     display: none;
   }
+
   .visible {
     display: block;
   }
@@ -91,9 +99,8 @@ const NavbarStyle = styled.div`
       .cartNotificationIcon {
         right: 1.5rem;
       }
-
+    }
   }
-
   @media ${devices.smallLaptop} {
     .NavContainer {
       padding: 0 3rem;
@@ -121,9 +128,9 @@ const NavbarStyle = styled.div`
         right: 0;
       }
     }
-      .search__div{
+    .search__div {
       width: 50%;
-      }
+    }
   }
 `;
 export default NavbarStyle;
