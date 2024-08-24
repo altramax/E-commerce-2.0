@@ -21,9 +21,7 @@ const CategoryLayoutStyle = styled.div`
   }
 
   .category__layout__head {
-    margin: 20px auto;
-    width: 100%;
-    text-align: center;
+    margin: 20px;
   }
 
   .category__layout__aside {
@@ -65,11 +63,15 @@ const CategoryLayoutStyle = styled.div`
     .category__group__container {
       padding-left: 36px;
     }
-    .category__layout__header {
+    .category__layout__header,
+    .category__layout__head {
       margin-left: 36px;
     }
   }
   @media ${devices.smallLaptop} {
+    .category__layout__head {
+      margin-left: 44px;
+    }
     .category__group__container {
       padding-left: 42px;
 

@@ -61,7 +61,6 @@ const AllProducts = ({ category }: productQuery): JSX.Element => {
     return img !== undefined ? img : "";
   };
 
-  console.log(products);
 
   const goToDetails = (items:any)=>{
     navigate(`/productdetails?id=${items.id}`)

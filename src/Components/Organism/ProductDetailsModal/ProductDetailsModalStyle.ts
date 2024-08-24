@@ -17,14 +17,14 @@ const ProductDetailsModalStyle = styled.div`
 
   .header__name {
     // width: 100%;
-    margin: 10px 20px;
+    margin: 10px 0;
   }
 
   .products__details__modal__header {
     display: flex;
     gap: 10px;
     align-items: top;
-    margin-left: 20px;
+    margin-left: 0;
     .route {
       cursor: pointer;
     }
@@ -33,7 +33,7 @@ const ProductDetailsModalStyle = styled.div`
   .cancleIcon {
     width: 100%;
     cursor: pointer;
-    padding: 20px;
+    padding: 20px 20px 20px 0;
     // position: sticky;
     top: 0;
     background-color: #ffffff;
@@ -208,7 +208,7 @@ const ProductDetailsModalStyle = styled.div`
 
   @media (min-width: 768px) {
     .products__details__modal__container {
-      // height: 60%;
+      padding: 100px 32px;
     }
     .images__container {
       width: fit-content;
@@ -216,7 +216,7 @@ const ProductDetailsModalStyle = styled.div`
     }
 
     .cancleIcon {
-      padding: 20px 30px;
+      padding: 20px 0;
     }
 
     .main__images {
@@ -270,13 +270,17 @@ const ProductDetailsModalStyle = styled.div`
     }
   }
 
-  @media ${devices.tablet} {
-    .products__details__modal__header, .header__name {
-      margin-left: 32px;
-    }
-  }
+  // @media ${devices.tablet} {
+  //   .products__details__modal__header,
+  //   .header__name {
+  //     margin-left: 32px;
+  //   }
+  // }
 
   @media (min-width: 1080px) {
+    .products__details__modal__container {
+      padding: 100px 48px;
+    }
     .products__details__modal {
       width: 100%;
       display: flex;
@@ -285,7 +289,7 @@ const ProductDetailsModalStyle = styled.div`
     }
 
     .cancleIcon {
-      padding: 20px 50px;
+      padding: 20px 0;
     }
 
     .images__container {

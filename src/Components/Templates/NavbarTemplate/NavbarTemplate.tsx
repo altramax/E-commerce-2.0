@@ -51,7 +51,7 @@ const Navbar = (): JSX.Element => {
     dispatch(localClearCart());
   };
 
-  // console.log(products);
+  console.log(user);
 
   return (
     <NavbarStyle>
@@ -72,7 +72,7 @@ const Navbar = (): JSX.Element => {
               )}
               {user !== null && (
                 <div className="center">
-                  <p>Hi Ezekiel</p>
+                  <p>{user.displayName}</p>
                   <div>
                     <IoMdPower size="30" onClick={logoutUser} />
                   </div>

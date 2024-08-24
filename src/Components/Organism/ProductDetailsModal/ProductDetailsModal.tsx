@@ -52,8 +52,6 @@ const ProductDetailsModal = (product: propsType): JSX.Element => {
   //   return date.toLocaleString("en-US", options);
   // };
 
-  console.log(product);
-
   const cancle = () => {
     navigate(-1);
   };
@@ -74,6 +72,14 @@ const ProductDetailsModal = (product: propsType): JSX.Element => {
           <span>{`>`}</span>
           <p className="route" onClick={() => goTo("/category?id=allProducts")}>
             Category
+          </p>
+
+          <span>{`>`}</span>
+          <p
+            className="route"
+            onClick={() => goTo(`/category?id=${product.category}`)}
+          >
+            {product.category}
           </p>
           <span>{`>`}</span>
           <p>{product.name}</p>
@@ -107,7 +113,7 @@ const ProductDetailsModal = (product: propsType): JSX.Element => {
           </div>
 
           <div className="discription__container">
-            <h2>{product?.name}</h2>
+            <h3>{product?.name}</h3>
             {product && priceAndDiscount()}
             {/* <h4>Date Created</h4>
             <p> {formateDate(product?.dateCreated.split(",")[0])}</p> */}

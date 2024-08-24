@@ -8,7 +8,7 @@ import AllProducts from "../ProductsContainer/AllProductsContainer";
 import Header from "../Header/Header";
 import useHorizontalScroll from "../../../hooks/UseScrollHorizontally";
 import { motion, Variants } from "framer-motion";
-// import { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const HomeManager = (): JSX.Element => {
   // const section = useRef<any>();
@@ -29,9 +29,12 @@ const HomeManager = (): JSX.Element => {
   // useEffect(() => {
   //   const observer = new IntersectionObserver(callBack, options);
   //   observer.observe(section.current);
-  //   observer.observe(section2.current);
-
   // }, []);
+  // // useEffect(() => {
+  // //   const observer = new IntersectionObserver(callBack, options);
+
+  // //   observer.observe(section2.current);
+  // // }, []);
 
   // const callBack = (entries: any) => {
   //   entries.forEach((entry: any) => {
@@ -44,7 +47,6 @@ const HomeManager = (): JSX.Element => {
   // };
 
   // const options = {};
-
 
   return (
     <HomeManagerStyle>
