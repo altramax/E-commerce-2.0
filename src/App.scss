@@ -7,4 +7,27 @@
   font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
   scroll-behavior: smooth;
+
+}
+
+.App{
+  opacity: 0;
+  animation: visibility 1s ease;
+}
+
+.loaded {
+  opacity: 1;
+}
+
+@keyframes visibility {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

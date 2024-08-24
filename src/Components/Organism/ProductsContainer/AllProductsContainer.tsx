@@ -9,6 +9,7 @@ import {
 } from "../../../Redux/ProductsSlice.js";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks.js";
 import EmptyState from "../../Molecules/EmptyState/EmptyState.js";
+import { useNavigate } from "react-router-dom";
 
 type productQuery = {
   category: string;
@@ -16,13 +17,15 @@ type productQuery = {
 
 const AllProducts = ({ category }: productQuery): JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
-  const categoryProducts = useAppSelector((state) => state.products.categoryProducts);
+  // const [selectedItem, setSelectedItem] = useState<any>(null);
+  const categoryProducts = useAppSelector(
+    (state) => state.products.categoryProducts
+  );
   const allProducts = useAppSelector((state) => state.products.allProducts);
   const products = category === "allProducts" ? allProducts : categoryProducts;
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  
+
   useEffect(() => {
     fetchProductData();
   }, [category]);
@@ -43,11 +46,11 @@ const AllProducts = ({ category }: productQuery): JSX.Element => {
     setModal(false);
   };
 
-  const renderModal = () => {
-    if (modal === true) {
-      return <ProductDetailsModal {...selectedItem} cancle={closeModal} />;
-    }
-  };
+  // const renderModal = () => {
+  //   if (modal === true) {
+  //     return <ProductDetailsModal {...selectedItem}  />;
+  //   }
+  // };
 
   const productImageHandler = (images: any) => {
     let img = images?.find((image: any) => {
@@ -60,11 +63,15 @@ const AllProducts = ({ category }: productQuery): JSX.Element => {
 
   console.log(products);
 
+  const goToDetails = (items:any)=>{
+    navigate(`/productdetails?id=${items.id}`)
+  }
+
   return (
     <AllProductsStyle>
       <>
         <div className="card__group">
-          {renderModal()}
+          {/* {renderModal()} */}
 
           {products !== null ? (
             <>
@@ -75,14 +82,14 @@ const AllProducts = ({ category }: productQuery): JSX.Element => {
                       <div
                         className="card__container"
                         key={i}
-                        onClick={() => setSelectedItem(product)}
+                        // onClick={() => setSelectedItem(product)}
                       >
                         <div className="card__inner__container">
                           <img
                             src={productImageHandler(product?.images)}
                             alt="Product Image"
                             className="product__image"
-                            onClick={openModal}
+                            onClick={()=>goToDetails(product)}
                           />
 
                           <div className="cart">

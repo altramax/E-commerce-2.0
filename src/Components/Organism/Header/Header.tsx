@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import HeaderStyle from "./HeaderStyle";
 
 const Header = () => {
-
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const timeoutRef = useRef<number | null>(null);
+  const [loaded, setLoaded] = useState<boolean>(false)
 
   const imgArr = [
     "https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723679021/shirt-mockup-concept-with-plain-clothing_acphex.jpg",
@@ -24,6 +22,7 @@ const Header = () => {
   ];
 
   useEffect(() => {
+    setLoaded(true)
     const intervalId = setInterval(() => {
       setIsTransitioning(true);
       setCurrentIndex((prevIndex) => prevIndex + 1);
@@ -49,54 +48,54 @@ const Header = () => {
 
   return (
     <HeaderStyle>
-        <div className="header__container">
-      <div className="carousel-container">
-        <div
-          className="carousel-content"
-          style={{
-            transform: `translateX(-${currentIndex * 100}%)`,
-            transition: isTransitioning ? "transform 0.5s ease-in-out" : "none",
-          }}
-        >
-          {imgArrWithLoop.map((imgSrc, index) => (
-            <img
-              key={index}
-              src={imgSrc}
-              alt={`Slide ${index}`}
-              className="carousel-img"
-            />
-          ))}
+      <div className={`header__container`}>
+        <div className="carousel-container">
+          <div
+            className="carousel-content"
+            style={{
+              transform: `translateX(-${currentIndex * 100}%)`,
+              transition: isTransitioning
+                ? "transform 0.5s ease-in-out"
+                : "none",
+            }}
+          >
+            {imgArrWithLoop.map((imgSrc, index) => (
+              <img
+                key={index}
+                src={imgSrc}
+                alt={`Slide ${index}`}
+                className="carousel-img"
+              />
+            ))}
+          </div>
+          <div className="carousel-buttons">
+            {imgArr.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleButtonClick(index)}
+                className={`carousel-button ${
+                  currentIndex === index ? "active" : ""
+                }`}
+              ></button>
+            ))}
+          </div>
         </div>
-        <div className="carousel-buttons">
-          {imgArr.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handleButtonClick(index)}
-              className={`carousel-button ${
-                currentIndex === index ? "active" : ""
-              }`}
-            ></button>
-          ))}
+        <div>
+          <h4 className="headerText__one">#Your Choice Store</h4>
+          {headerText.map((txt, i) => {
+            return (
+              <h2
+                key={i}
+                className={`headerText ${
+                  currentIndex === i ? "visible" : "hidden"
+                }`}
+              >
+                {txt}
+              </h2>
+            );
+          })}
         </div>
-    
       </div>
-      <div>
-        <h4 className="headerText__one">#Your Choice Store</h4>
-        {headerText.map((txt, i) => {
-          return (
-            <h2
-              key={i}
-              className={`headerText ${
-                currentIndex === i ? "visible" : "hidden"
-              }`}
-            >
-              {txt}
-            </h2>
-          );
-        })}
-        </div>
-
-        </div>
     </HeaderStyle>
   );
 };

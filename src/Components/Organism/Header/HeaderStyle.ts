@@ -10,6 +10,8 @@ const HeaderStyle = styled.div`
     background-color: #b7b6b4;
   }
 
+ 
+
   .carousel-container {
     width: 100%;
     overflow: hidden;

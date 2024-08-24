@@ -8,6 +8,8 @@ const HomeManagerStyle = styled.div`
     // margin: 0 1rem;
     padding: 70px 50px;
     // background-color: #fcfcfc;
+    // transform: translateY(30%);
+    // transition: opacity 0.5s ease, transform 0.5s ease;
 
     .direction {
       display: none;
@@ -130,6 +132,8 @@ const HomeManagerStyle = styled.div`
   }
 
   .allProducts__container {
+    // transform: translateY(30%);
+    // transition: opacity 0.5s ease, transform 0.5s ease;
     margin-top: 30px;
     // background-color: #efefef;
     background-color: #f1f0ff;
@@ -148,10 +152,20 @@ const HomeManagerStyle = styled.div`
     }
   }
 
+  .fadein__left {
+    opacity: 1;
+    transform: translateY(100);
+  }
 
+  .fadein__right {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-
-
+  // .categoryContainer{
+  //    transform: translateY(-100%);
+  //   transition: opacity 0.8s ease, transform 0.8s ease;
+  // }
 
   @media ${devices.tablet} {
     .brandsContainer:hover {

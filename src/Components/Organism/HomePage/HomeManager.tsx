@@ -7,8 +7,12 @@ import CategoryGroup from "../CategoryGroup/CategoryGroup";
 import AllProducts from "../ProductsContainer/AllProductsContainer";
 import Header from "../Header/Header";
 import useHorizontalScroll from "../../../hooks/UseScrollHorizontally";
+import { motion, Variants } from "framer-motion";
+// import { useEffect, useRef } from "react";
 
 const HomeManager = (): JSX.Element => {
+  // const section = useRef<any>();
+  // const section2 = useRef<any>();
   const navigate = useNavigate();
   const {
     scrollContainer,
@@ -21,6 +25,26 @@ const HomeManager = (): JSX.Element => {
   const handleNavigation = (route: string) => {
     navigate(`/category?id=${route}`);
   };
+
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(callBack, options);
+  //   observer.observe(section.current);
+  //   observer.observe(section2.current);
+
+  // }, []);
+
+  // const callBack = (entries: any) => {
+  //   entries.forEach((entry: any) => {
+  //     if (entry.isIntersecting) {
+  //       entry.target.classList.add("fadein__right");
+  //     } else {
+  //       entry.target.classList.remove("fadein__right");
+  //     }
+  //   });
+  // };
+
+  // const options = {};
+
 
   return (
     <HomeManagerStyle>
@@ -138,7 +162,7 @@ const HomeManager = (): JSX.Element => {
       <section className="offersGroups">
         <div className="offers">
           <img
-            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813162/refund_wprbrb.png"
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1724436959/refund-svgrepo-com_ujsbgy.svg"
             alt=""
             className="offersImg"
           />
@@ -147,7 +171,7 @@ const HomeManager = (): JSX.Element => {
         </div>
         <div className="offers">
           <img
-            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813154/mask_ozynfj.png"
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1724436959/mask-happly-svgrepo-com_rc3zy9.svg"
             alt=""
             className="offersImg"
           />
@@ -156,7 +180,7 @@ const HomeManager = (): JSX.Element => {
         </div>
         <div className="offers">
           <img
-            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813170/update_b4vrwq.png"
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1724436959/everyday-tasks-svgrepo-com_1_zvpxwx.svg"
             alt=""
             className="offersImg"
           />
@@ -165,7 +189,7 @@ const HomeManager = (): JSX.Element => {
         </div>
         <div className="offers">
           <img
-            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723813166/shipping_yfeq30.png"
+            src="https://res.cloudinary.com/dn9dkcxvs/image/upload/v1724436959/delivery-fast-svgrepo-com_k47ya9.svg"
             alt=""
             className="offersImg"
           />

@@ -1,19 +1,9 @@
 import styled from "styled-components";
+import { devices } from "../../Media Queries/Media";
 
 const ProductDetailsModalStyle = styled.div`
   .products__details__modal__container::-webkit-scrollbar {
     display: none;
-  }
-
-  .overlayModal {
-    background-color: #0f0f0f;
-    position: fixed;
-    opacity: 0.5;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 2;
   }
 
   @keyframes popUp {
@@ -25,22 +15,33 @@ const ProductDetailsModalStyle = styled.div`
     }
   }
 
+  .header__name {
+    // width: 100%;
+    margin: 10px 20px;
+  }
+
+  .products__details__modal__header {
+    display: flex;
+    gap: 10px;
+    align-items: top;
+    margin-left: 20px;
+    .route {
+      cursor: pointer;
+    }
+  }
+
   .cancleIcon {
     width: 100%;
     cursor: pointer;
     padding: 20px;
-    position: sticky;
+    // position: sticky;
     top: 0;
     background-color: #ffffff;
-    .cancleIcon__img {
-      width: 40px;
-      display: block;
-    }
   }
 
   .products__details__modal__container {
     width: 100%;
-    height: 70%;
+    height: 100%;
     overflow-y: scroll;
     z-index: 3;
     position: fixed;
@@ -48,7 +49,7 @@ const ProductDetailsModalStyle = styled.div`
     left: 0;
     animation: popUp 0.5s ease;
     transform-origin: bottom center;
-    padding: 0 20px;
+    padding: 100px 20px;
     background-color: #ffffff;
   }
 
@@ -266,6 +267,12 @@ const ProductDetailsModalStyle = styled.div`
     }
     .hide {
       display: block;
+    }
+  }
+
+  @media ${devices.tablet} {
+    .products__details__modal__header, .header__name {
+      margin-left: 32px;
     }
   }
 

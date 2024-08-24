@@ -16,13 +16,11 @@ const MarketPlaceTemplate = () => {
 
   return (
     <MarketPlaceTemplateStyle>
-      <div  className="category_margin" onClick={reloadHandler}>
-      <Navbar />
-        <CategoryGroup />
-      </div>
-      <h1 className="product">Products</h1>
-      <div className="cartegory_height">
-        <CategoryLayout />
+      <div onClick={reloadHandler}>
+        <Navbar />
+        <div className="cartegory_height">
+          <CategoryLayout />
+        </div>
       </div>
       <Footer />
     </MarketPlaceTemplateStyle>

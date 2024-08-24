@@ -4,8 +4,8 @@ import useHorizontalScroll from "../../../hooks/UseScrollHorizontally";
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 
-const CategoryGroup = () => {
 
+const CategoryGroup = () => {
   const {
     scrollContainer,
     showLeftButton,

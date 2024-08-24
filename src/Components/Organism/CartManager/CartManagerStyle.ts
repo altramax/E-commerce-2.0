@@ -4,13 +4,13 @@ import { devices } from "../../Media Queries/Media";
 const CartManagerStyle = styled.div`
   .cartManager__container {
     margin-top: 40px;
-    padding: 30px;
+    padding: 0 30px 30px 30px;
   }
 
   .header__name {
-    padding: 30px 30px 10px 30px;
+    padding: 100px 30px 10px 30px;
     position: fixed;
-    top: 60px;
+    top: 0;
     left:0;
    display: flex;
    justify-content: center;

@@ -1,13 +1,12 @@
 import ProductDetailsStyle from "./ProductDetailsModalStyle";
-import arrow_dark from "../../assets/Icons/arrowDownLongDark.svg";
-import arrow_light from "../../assets/Icons/arrowDownLongLight.svg";
+import { HiArrowLeft } from "react-icons/hi2";
 import { useAppSelector } from "../../../Redux/Hooks";
 import { useEffect, useState } from "react";
 import AddToCart from "../AddToCart/AddToCart";
 import { postStructure } from "../AddToCart/AddToCart";
+import { useNavigate } from "react-router-dom";
 
 type propsType = {
-  cancle: any;
   id: string;
   name: string;
   description: string;
@@ -24,12 +23,10 @@ type propsType = {
 
 const ProductDetailsModal = (product: propsType): JSX.Element => {
   const [currentImage, setCurrentImage] = useState<string>();
+  const navigate = useNavigate();
 
-  useEffect(() => { 
-        setCurrentImage(
-          product.images.find((image: any) => image.url !== "")?.url
-        );
-   
+  useEffect(() => {
+    setCurrentImage(product.images.find((image: any) => image.url !== "")?.url);
   }, []);
 
   const priceAndDiscount = () => {
@@ -42,7 +39,9 @@ const ProductDetailsModal = (product: propsType): JSX.Element => {
       <div className="flex">
         {percentDis > 0 && <h5>₦{Number(product?.price).toLocaleString()}</h5>}
         <h2>₦{newPrice.toLocaleString()}</h2>
-        {percentDis > 0 && <small className="dis">{percentDis.toFixed(1)}% dis</small>}
+        {percentDis > 0 && (
+          <small className="dis">{percentDis.toFixed(1)}% dis</small>
+        )}
       </div>
     );
   };
@@ -55,12 +54,32 @@ const ProductDetailsModal = (product: propsType): JSX.Element => {
 
   console.log(product);
 
+  const cancle = () => {
+    navigate(-1);
+  };
+
+  const goTo = (route: string) => {
+    navigate(route);
+  };
+
   return (
     <ProductDetailsStyle>
-      <div className="overlayModal" onClick={product.cancle}></div>
       <div className="products__details__modal__container">
-        <div className="cancleIcon" onClick={product.cancle}>
-          <img src={arrow_dark} alt="" className="cancleIcon__img" />
+        <h2 className="header__name">Product Details</h2>
+
+        <div className="products__details__modal__header">
+          <p className="route" onClick={() => goTo("/")}>
+            Home
+          </p>
+          <span>{`>`}</span>
+          <p className="route" onClick={() => goTo("/category?id=allProducts")}>
+            Category
+          </p>
+          <span>{`>`}</span>
+          <p>{product.name}</p>
+        </div>
+        <div className="cancleIcon" onClick={cancle}>
+          <HiArrowLeft size="40" />
         </div>
         <div className="products__details__modal">
           <div className="images__container">
@@ -92,8 +111,8 @@ const ProductDetailsModal = (product: propsType): JSX.Element => {
             {product && priceAndDiscount()}
             {/* <h4>Date Created</h4>
             <p> {formateDate(product?.dateCreated.split(",")[0])}</p> */}
-            <h4>Quantity Available</h4>
-            <p> {product?.availableQuantity}</p>
+            {/* <h4>Quantity Available</h4>
+            <p> {product?.availableQuantity}</p> */}
             <div className="info">
               <div className="size__container">
                 <h4>Available Sizes</h4>
@@ -131,8 +150,7 @@ const ProductDetailsModal = (product: propsType): JSX.Element => {
               </div>
             </div>
             <div className="addtocart__div">
-            <AddToCart {...product}/>
-            
+              <AddToCart {...product} />
             </div>
 
             <h4>Category</h4>
@@ -140,8 +158,6 @@ const ProductDetailsModal = (product: propsType): JSX.Element => {
 
             <h4>Description</h4>
             <p>{product?.description}</p>
-
-           
           </div>
         </div>
       </div>

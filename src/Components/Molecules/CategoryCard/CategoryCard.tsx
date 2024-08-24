@@ -16,11 +16,16 @@ const CategoryCard = ({ image, category, name }: cardType) => {
 
   return (
     <CategoryCardStyle>
-      <div className="category__card__container" onClick={handleNavigation}>
+      <div
+        className={`category__card__container ${
+          window.location.href.split("=")[1] === category ? "active" : ""
+        }`}
+        onClick={handleNavigation}
+      >
         <div className="category__card__image">
           <img src={`${image}`} alt="" />
         </div>
-      <p>{name}</p>
+        <p>{name}</p>
       </div>
     </CategoryCardStyle>
   );

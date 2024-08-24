@@ -120,6 +120,10 @@ const AllProductsStyle = styled.div`
         bottom: 0;
         width: 150px;
       }
+
+    }
+
+    .card__container:hover{
     }
 
     .product__image {
