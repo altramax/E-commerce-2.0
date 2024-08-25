@@ -1,16 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../Config/Config";
-import AllProducts from "../Components/Organism/ProductsContainer/AllProductsContainer";
 
 type productsType = {
   allProducts: any;
   categoryProducts: any;
+  productName: any;
 };
 
 const initialState: productsType = {
   categoryProducts: null,
-  allProducts: null
+  allProducts: null,
+  productName: null,
 };
 
 export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
@@ -40,6 +48,37 @@ export const getProductCategory = createAsyncThunk(
   }
 );
 
+export const getProductName = createAsyncThunk(
+  "getProductName",
+  async (category: any) => {
+    try {
+      const categoryRef = collection(db, "Products");
+      const q = query(
+        categoryRef,
+        where("items", "array-contains", { name: `${category}` })
+      );
+      const querySnapshot = await getDocs(q);
+
+      const docs = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(docs, querySnapshot.docs);
+      return docs;
+    } catch (error) {
+      console.error("Error fetching documents: ", error);
+    }
+
+    // if (docSnap.exists()) {
+    //   console.log(docSnap.data());
+    //   return docSnap.data().items;
+    // } else {
+    //   // docSnap.data() will be undefined in this case
+    //   console.log("No such document!");
+    // }
+  }
+);
+
 export const ProductsSlice = createSlice({
   name: "Products",
   initialState,
@@ -63,6 +102,13 @@ export const ProductsSlice = createSlice({
     });
     builder.addCase(getProductCategory.rejected, (state) => {
       state.categoryProducts = null;
+    });
+
+    builder.addCase(getProductName.fulfilled, (state, action) => {
+      state.productName = action.payload;
+    });
+    builder.addCase(getProductName.rejected, (state) => {
+      state.productName = null;
     });
   },
 });

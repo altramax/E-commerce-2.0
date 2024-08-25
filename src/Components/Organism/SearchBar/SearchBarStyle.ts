@@ -16,14 +16,15 @@ const SearchBarStyle = styled.div`
       width: 50%;
       div {
         position: absolute;
-        right: 4px;
-        top: 4px;
+        right: 6px;
+        top: 9px;
       }
       input {
         width: 100%;
         padding: 8px;
         border-radius: 10px;
         outline: none;
+        font-size: 18px;
       }
     }
   }

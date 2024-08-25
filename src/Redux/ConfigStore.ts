@@ -19,7 +19,7 @@ import {
 const persistConfig = {
   key: "root",
   storage,
-  // blacklist: ["userDetails", "products"],
+  blacklist: ["userDetails", "products"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

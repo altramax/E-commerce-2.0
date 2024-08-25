@@ -74,7 +74,7 @@ const AllProducts = ({ category }: productQuery): JSX.Element => {
 
           {products !== null ? (
             <>
-              {products !== null && products.length !== 0 ? (
+              {products !== null && products !== undefined && products.length !== 0 ? (
                 <>
                   {products?.map((product: any, i: any) => {
                     return (
@@ -107,8 +107,8 @@ const AllProducts = ({ category }: productQuery): JSX.Element => {
                 </>
               ) : (
                 <EmptyState
-                  header="Category Not Available"
-                  text="This Category is currently unavailable, please check back soon"
+                  header="Product Not Available"
+                  text="This Product is currently unavailable, please check back soon"
                 />
               )}
             </>

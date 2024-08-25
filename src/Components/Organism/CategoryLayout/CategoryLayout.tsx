@@ -17,6 +17,8 @@ const CategoryLayout = () => {
     navigate(route);
   };
 
+  console.log(window.location.href.split("=")[1]);
+
   return (
     <CategoryLayoutStyle>
       <div className="category__layout__header">
