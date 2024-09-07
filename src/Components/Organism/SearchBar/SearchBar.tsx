@@ -1,21 +1,33 @@
 import SearchBarStyle from "./SearchBarStyle";
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks";
-import { getAllProducts, getProductName } from "../../../Redux/ProductsSlice";
+import { getAllProducts, wordpress } from "../../../Redux/ProductsSlice";
 import { IoIosSearch } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SearchBar = () => {
   const [search, setSearch] = useState<string>("");
   const [results, setResults] = useState<any>("");
   const [openSearchbar, setOpenSearchbar] = useState<boolean>(false);
   const products = useAppSelector((state) => state.products.allProducts);
-  const productName = useAppSelector((state) => state.products.productName);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    g();
+  }, []);
+
+  const g = async () => {
+    console.log("enter");
+    const prod = await axios.get('https://localhost/ogwears/wp-json/wc/v3/products?consumer_key=ck_cef86abbb7d3e4b387dd49585d0975de4b3d8128&consumer_secret=cs_1496ddec28955d77f6e22ce02184534c952588c5'
+    );
+    console.log(prod.data());
+  };
+
   const openSearchBarHandler = () => {
     dispatch(getAllProducts());
+    dispatch(wordpress());
     setOpenSearchbar(true);
   };
 
@@ -30,13 +42,13 @@ const SearchBar = () => {
     let product = item
       ? products.filter((res: any) => res.name.toLowerCase().includes(item))
       : [];
-    // console.log(product);
+
     setResults(product);
   };
 
   const handleNavigation = (route: any) => {
     route.preventDefault();
-    console.log(route);
+
     navigate(`/category?id=${route}`);
     closeSearchBarHandler();
     setSearch("");
@@ -44,15 +56,10 @@ const SearchBar = () => {
 
   const handleSubmit = (evt: any) => {
     evt.preventDefault();
-    // navigate(`/category?id=${search}`);
-    // closeSearchBarHandler();
-    // setSearch("");
-
-
-    dispatch(getProductName(search))
+    navigate(`/category?id=${search}`);
+    closeSearchBarHandler();
+    setSearch("");
   };
-
-  console.log(productName);
 
   return (
     <SearchBarStyle>
@@ -75,17 +82,14 @@ const SearchBar = () => {
             </div>
           </div>
 
-          <>
+          
             {openSearchbar && (
               <div className="search_results">
                 {results.length > 0 ? (
                   <>
                     {results.map((res: any, i: any) => {
                       return (
-                        <p
-                          key={i}
-                          onClick={() => handleNavigation(res.category)}
-                        >
+                        <p key={i} onClick={() => handleNavigation(res.name)}>
                           {" "}
                           {res.name}{" "}
                         </p>
@@ -97,7 +101,7 @@ const SearchBar = () => {
                 )}
               </div>
             )}
-          </>
+          
         </div>
       </form>
     </SearchBarStyle>

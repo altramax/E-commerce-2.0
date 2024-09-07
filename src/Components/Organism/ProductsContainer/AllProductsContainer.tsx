@@ -1,56 +1,53 @@
 import { useState, useEffect } from "react";
 import AllProductsStyle from "./AllProductsStyle.js";
-import LazyLoading from "../../Molecules/ProductsLazyLoading/ProductsLazyLoading.js";
-import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal.js";
+// import LazyLoading from "../../Molecules/ProductsLazyLoading/ProductsLazyLoading.js";
+// import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal.js";
 import AddToCart from "../AddToCart/AddToCart.js";
 import {
   getAllProducts,
-  getProductCategory,
+  // getProductCategory,
 } from "../../../Redux/ProductsSlice.js";
 import { useAppDispatch, useAppSelector } from "../../../Redux/Hooks.js";
 import EmptyState from "../../Molecules/EmptyState/EmptyState.js";
 import { useNavigate } from "react-router-dom";
 
 type productQuery = {
-  category: string;
+  name: string;
 };
 
-const AllProducts = ({ category }: productQuery): JSX.Element => {
-  const [modal, setModal] = useState<boolean>(false);
-  // const [selectedItem, setSelectedItem] = useState<any>(null);
-  const categoryProducts = useAppSelector(
-    (state) => state.products.categoryProducts
-  );
-  const allProducts = useAppSelector((state) => state.products.allProducts);
-  const products = category === "allProducts" ? allProducts : categoryProducts;
+const AllProducts = ({ name }: productQuery): JSX.Element => {
+  
+  const [results, setResults] = useState<any>(null);
+  const products = useAppSelector((state) => state.products.allProducts);
+  // const products = category === "allProducts" ? allProducts : categoryProducts;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchProductData();
-  }, [category]);
+    dispatch(getAllProducts());
+    handleProducts();
+  }, [name]);
 
-  const fetchProductData = async () => {
-    if (category === "allProducts") {
-      await dispatch(getAllProducts());
-    } else {
-      await dispatch(getProductCategory(category));
-    }
-  };
-
-  const openModal = () => {
-    setModal(true);
-  };
-
-  const closeModal = () => {
-    setModal(false);
-  };
-
-  // const renderModal = () => {
-  //   if (modal === true) {
-  //     return <ProductDetailsModal {...selectedItem}  />;
+  // const fetchProductData = async () => {
+  //   if (category === "allProducts") {
+  //     await dispatch(getAllProducts());
+  //   } else {
+  //     await dispatch(getProductCategory(category));
   //   }
   // };
+
+  const handleProducts = () => {
+    if (name !== "All Category") {
+      let item = name.toLowerCase();
+      let list = item
+        ? products.filter((res: any) => res.name.toLowerCase().includes(item))
+        : [];
+      // console.log(product);
+      setResults(list);
+    } else {
+      setResults(products);
+    }
+  };
 
   const productImageHandler = (images: any) => {
     let img = images?.find((image: any) => {
@@ -61,22 +58,23 @@ const AllProducts = ({ category }: productQuery): JSX.Element => {
     return img !== undefined ? img : "";
   };
 
-
-  const goToDetails = (items:any)=>{
-    navigate(`/productdetails?id=${items.id}`)
-  }
+  const goToDetails = (items: any) => {
+    navigate(`/productdetails?id=${items.id}`);
+  };
 
   return (
     <AllProductsStyle>
-      <>
+      
         <div className="card__group">
-          {/* {renderModal()} */}
+     
 
-          {products !== null ? (
+          {results !== null ? (
             <>
-              {products !== null && products !== undefined && products.length !== 0 ? (
+              {results !== null &&
+              results !== undefined &&
+              results.length !== 0 ? (
                 <>
-                  {products?.map((product: any, i: any) => {
+                  {results?.map((product: any, i: any) => {
                     return (
                       <div
                         className="card__container"
@@ -132,7 +130,7 @@ const AllProducts = ({ category }: productQuery): JSX.Element => {
             </>
           )}
         </div>
-      </>
+    
     </AllProductsStyle>
   );
 };

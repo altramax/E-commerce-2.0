@@ -19,19 +19,19 @@ const CategoryGroup = () => {
     {
       image:
         "https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723729723/shirt_16797148_dpvqjx.png",
-      category: "Men",
-      name: "Men",
+
+      name: "Shirts",
     },
     {
       image:
         "https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723730085/shopping_15090193_yg6ndl.png",
-      category: "Women",
+   
       name: "Women",
     },
     {
       image:
         "https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723730347/shoes_11760018_lkphid.png",
-      category: "Shoes",
+   
       name: "Shoes",
     },
     // {
@@ -49,7 +49,7 @@ const CategoryGroup = () => {
     {
       image:
         "https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723729722/hand-watch_3549070_yjdg0w.png",
-      category: "Watches",
+    
       name: "Watches",
     },
     // {
@@ -60,7 +60,7 @@ const CategoryGroup = () => {
     // },
     {
         image:"https://res.cloudinary.com/dn9dkcxvs/image/upload/v1723744648/button_13801178_qwlgae.png",
-        category: "allProducts",
+    
         name: "All Category"
     }
   ];

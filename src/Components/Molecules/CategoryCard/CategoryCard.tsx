@@ -3,22 +3,23 @@ import { useNavigate } from "react-router-dom";
 
 type cardType = {
   image: string;
-  category: string;
   name: string;
 };
 
-const CategoryCard = ({ image, category, name }: cardType) => {
+const CategoryCard = ({ image, name }: cardType) => {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
-    navigate(`/category?id=${category}`);
+    navigate(`/category?id=${name}`);
   };
+
+  const param = decodeURIComponent(window.location.href.split("=")[1]);
 
   return (
     <CategoryCardStyle>
       <div
         className={`category__card__container ${
-          window.location.href.split("=")[1] === category ? "active" : ""
+        param === name ? "active" : ""
         }`}
         onClick={handleNavigation}
       >

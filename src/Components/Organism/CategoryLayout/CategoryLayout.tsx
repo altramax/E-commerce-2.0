@@ -10,14 +10,14 @@ const CategoryLayout = () => {
   let query = window.location.href.split("=")[1];
 
   useEffect(() => {
-    setParam(window.location.href.split("=")[1]);
+    const decodedParam = decodeURIComponent(window.location.href.split("=")[1]);
+    setParam(decodedParam);
   }, [query]);
 
   const goTo = (route: string) => {
     navigate(route);
   };
 
-  console.log(window.location.href.split("=")[1]);
 
   return (
     <CategoryLayoutStyle>
@@ -34,7 +34,7 @@ const CategoryLayout = () => {
           <CategoryGroup />
         </div>
         <div className="category__layout__products">
-          <AllProducts category={param} />
+          <AllProducts name={param} />
         </div>
       </div>
     </CategoryLayoutStyle>

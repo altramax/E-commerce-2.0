@@ -1,13 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  doc,
-  getDoc,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../Config/Config";
+import axios from "axios";
 
 type productsType = {
   allProducts: any;
@@ -32,6 +26,22 @@ export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
   return results;
 });
 
+export const wordpress = createAsyncThunk("getAllProductdd", async () => {
+  const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
+  const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
+
+  console.log("enter");
+
+  if (!consumerKey || !consumerSecret) {
+    throw new Error("Missing API credentials");
+  }
+  const prod = await axios.get(
+    `https://localhost/ogwears/wp-json/wc/v3/products?consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
+  );
+
+  console.log(prod.data());
+});
+
 export const getProductCategory = createAsyncThunk(
   "getProductCategory",
   async (category: any) => {
@@ -45,37 +55,6 @@ export const getProductCategory = createAsyncThunk(
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
     }
-  }
-);
-
-export const getProductName = createAsyncThunk(
-  "getProductName",
-  async (category: any) => {
-    try {
-      const categoryRef = collection(db, "Products");
-      const q = query(
-        categoryRef,
-        where("items", "array-contains", { name: `${category}` })
-      );
-      const querySnapshot = await getDocs(q);
-
-      const docs = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      console.log(docs, querySnapshot.docs);
-      return docs;
-    } catch (error) {
-      console.error("Error fetching documents: ", error);
-    }
-
-    // if (docSnap.exists()) {
-    //   console.log(docSnap.data());
-    //   return docSnap.data().items;
-    // } else {
-    //   // docSnap.data() will be undefined in this case
-    //   console.log("No such document!");
-    // }
   }
 );
 
@@ -102,13 +81,6 @@ export const ProductsSlice = createSlice({
     });
     builder.addCase(getProductCategory.rejected, (state) => {
       state.categoryProducts = null;
-    });
-
-    builder.addCase(getProductName.fulfilled, (state, action) => {
-      state.productName = action.payload;
-    });
-    builder.addCase(getProductName.rejected, (state) => {
-      state.productName = null;
     });
   },
 });

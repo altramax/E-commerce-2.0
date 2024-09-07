@@ -13,6 +13,7 @@ import { localClearCart, updateProductsData } from "../../../Redux/CartSlice";
 import SearchBar from "../../Organism/SearchBar/SearchBar";
 import useScrollDirection from "../../../hooks/UseScrollDirection";
 
+
 const Navbar = (): JSX.Element => {
   const user = useAppSelector((state) => state.user.user);
   const cart = useAppSelector((state) => state.cart.products);
@@ -51,11 +52,11 @@ const Navbar = (): JSX.Element => {
     dispatch(localClearCart());
   };
 
-  // console.log(user);
+
 
   return (
     <NavbarStyle>
-      <>
+      
         <div className={`NavContainer ${
         scrollDirection === "down" ? "goUp" : ""}`}>
           <Link to="/" className="Logo">
@@ -72,7 +73,7 @@ const Navbar = (): JSX.Element => {
               )}
               {user !== null && (
                 <div className="center">
-                  <p>Hi {user.displayName}</p>
+                  {/* <p>Hi {user.displayName}</p> */}
                   <div>
                     <IoMdPower size="30" onClick={logoutUser} />
                   </div>
@@ -88,7 +89,7 @@ const Navbar = (): JSX.Element => {
             </Link>
           </div>
         </div>
-      </>
+      
     </NavbarStyle>
   );
 };

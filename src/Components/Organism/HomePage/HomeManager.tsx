@@ -58,7 +58,7 @@ const HomeManager = (): JSX.Element => {
 
       <section className="allProducts__container">
         <h3>Bestsellers</h3>
-        <AllProducts category="Bags" />
+        <AllProducts name="men" />
       </section>
 
       <section className="brandsContainer">
